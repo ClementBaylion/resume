@@ -60,6 +60,21 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3b82f6; /* Blue spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -89,7 +104,7 @@
                         Contact Me
                     </a>
                     <!-- Download CV button -->
-                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48">
+                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;">
                         Resume
                     </a>
                 </div>
@@ -154,6 +169,28 @@
         </div>
     </div>
 
+    <!-- New Section: Bottom Contact Buttons -->
+    <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
+        <div class="flex flex-col sm:flex-row justify-center gap-8">
+            <!-- Contact Me Button (wider) -->
+            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;">
+                Contact Me
+            </a>
+            <!-- Resume Button (wider) -->
+            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;">
+                Resume
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-[#2e1b79] text-white text-center py-8">
+        <div class="container mx-auto max-w-4xl px-8 sm:px-12">
+            <p>&copy; 2025 Clement Baylion. All rights reserved.</p>
+            
+        </div>
+    </footer>
+
     <!-- The Modal (outside all main content blocks) -->
     <div id="contactModal" class="modal">
         <!-- Modal content -->
@@ -170,18 +207,27 @@
     </div>
 
     <!-- Scripts -->
-    <script>
+    <script type="module"> // Changed to type="module"
+        // Import the persona instruction from the separate file
+        // import { agentPersonaInstruction } from './persona.js'; // Removed as AI section is removed
+
         // Get the modal
         var modal = document.getElementById("contactModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("contactMeBtn");
+        var btnTop = document.getElementById("contactMeBtn"); // Top button
+        var btnBottom = document.getElementById("contactMeBtnBottom"); // Bottom button
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close-button")[0];
 
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
+        // When the user clicks the top button, open the modal 
+        btnTop.onclick = function() {
+            modal.style.display = "flex"; // Use flex to center content
+        }
+
+        // When the user clicks the bottom button, open the modal 
+        btnBottom.onclick = function() {
             modal.style.display = "flex"; // Use flex to center content
         }
 
@@ -196,6 +242,90 @@
                 modal.style.display = "none";
             }
         }
+
+        // JavaScript for AI Marketing Assistant (removed)
+        /*
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiInput = document.getElementById('aiInput');
+            const generateSloganBtn = document.getElementById('generateSloganBtn');
+            const generateSocialPostBtn = document.getElementById('generateSocialPostBtn');
+            const generateValuePropBtn = document.getElementById('generateValuePropBtn');
+            const aiOutput = document.getElementById('aiOutput');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            // agentPersonaInstruction is now imported from persona.js
+
+            // Function to call Gemini API
+            async function callGeminiAPI(userPrompt) {
+                loadingIndicator.classList.remove('hidden');
+                aiOutput.innerHTML = ''; // Clear previous output
+                aiOutput.classList.add('flex', 'items-center', 'justify-center'); // Center loading text
+
+                try {
+                    let chatHistory = [];
+                    // Add the persona instruction as the first part of the chat history
+                    chatHistory.push({ role: "user", parts: [{ text: agentPersonaInstruction }] });
+                    // Then add the user's specific prompt
+                    chatHistory.push({ role: "user", parts: [{ text: userPrompt }] });
+                    
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // Canvas will automatically provide the API key
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        aiOutput.innerHTML = `<p class="text-slate-700">${text}</p>`;
+                    } else {
+                        aiOutput.innerHTML = `<p class="text-red-500">Error: Could not generate content. Please try again.</p>`;
+                        console.error("Gemini API response structure unexpected:", result);
+                    }
+                } catch (error) {
+                    aiOutput.innerHTML = `<p class="text-red-500">Error: ${error.message}. Please check your input or try again later.</p>`;
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                    aiOutput.classList.remove('flex', 'items-center', 'justify-center'); // Remove centering after loading
+                }
+            }
+
+            // Event Listeners for buttons
+            generateSloganBtn.addEventListener('click', () => {
+                const input = aiInput.value.trim();
+                if (input) {
+                    callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
+                } else {
+                    aiOutput.innerHTML = '<p class="text-red-500">Please enter a question.</p>';
+                }
+            });
+
+            generateSocialPostBtn.addEventListener('click', () => {
+                const input = aiInput.value.trim();
+                if (input) {
+                    callGeminiAPI(`Compare the following job offer with Clement's profile and highlight key matches and potential areas of contribution: ${input}`);
+                } else {
+                    aiOutput.innerHTML = '<p class="text-red-500">Please paste a job offer to compare.</p>';
+                }
+            });
+
+            generateValuePropBtn.addEventListener('click', () => {
+                const input = aiInput.value.trim();
+                if (input) {
+                    callGeminiAPI(`Summarize Clement's expertise and how it applies to the following context: ${input}`);
+                } else {
+                    aiOutput.innerHTML = '<p class="text-red-500">Please provide a context to summarize expertise.</p>';
+                }
+            });
+        });
+        */
     </script>
 </body>
 </html>
