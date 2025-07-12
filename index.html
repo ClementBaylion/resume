@@ -328,7 +328,7 @@
                     chatHistory.push({ role: "user", parts: [{ text: userPrompt }] });
                     
                     const payload = { contents: chatHistory };
-                    const apiKey = ""; // Canvas will automatically provide the API key
+                    const apiKey = "AIzaSyDLPolrvEFoGBebzheZp1RdRiGGNbyW5RI"; // Clé API insérée ici
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                     const response = await fetch(apiUrl, {
