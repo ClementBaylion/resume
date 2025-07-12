@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clement Baylion - Professional Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        .header {
+            background-color: #2e1b79;
+            color: #ecf0f1;
+            padding: 3rem 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative; /* Needed for absolute positioning of the buttons */
+        }
+        .section-title {
+            color: #2c3e50;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
+        }
+        .experience-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .job-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+        .company-info {
+            font-size: 1.125rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+        .description-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .description-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        .description-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #2e1b79; /* Changed background color to match header */
+            color: #ecf0f1;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        /* Style for the download button */
+        .download-button {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: #645ddc;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .download-button:hover {
+            background-color: #534bbd;
+            transform: translateY(-2px);
+        }
+        .download-button i {
+            font-size: 1.25rem;
+        }
+        /* Style for the go back button */
+        .go-back-button {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background-color: #645ddc; /* Using the same color as download button for consistency */
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .go-back-button:hover {
+            background-color: #534bbd;
+            transform: translateY(-2px);
+        }
+        .go-back-button i {
+            font-size: 1.25rem;
+        }
+
+        /* Style for the Contact Me button */
+        .contact-button {
+            background-color: #645ddc; /* Changed to match other buttons */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-button:hover {
+            background-color: #534bbd; /* Adjusted hover color */
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000; /* High z-index to be on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: #333;
+            text-decoration: none;
+        }
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .modal-body p {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .modal-body p i {
+            color: #3498db;
+            font-size: 1.25rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- Go Back Button -->
+        <a href="https://clementbaylion.github.io/resume/" class="go-back-button">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </a>
+
+        <!-- Download Button -->
+        <a href="resume.pdf" download="resume.pdf" class="download-button">
+            <i class="fas fa-download"></i> Download CV
+        </a>
+
+        <h1 class="text-5xl font-bold mb-4">Clement Baylion</h1>
+        <p class="text-2xl font-light">Marketing Manager</p>
+        <p class="text-3xl font-semibold text-blue-200 mt-8">Connecting Innovation to Sales Performance</p>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Professional Experience</h2>
+
+        <!-- Experience 1: Atlas Copco -->
+        <div class="experience-card">
+            <h3 class="job-title">Product Marketing Manager & Global Product Manager, Air Assembly Tools</h3>
+            <p class="company-info">Atlas Copco | Nacka, Sweden | 2023 – Present</p>
+            <ul class="description-list">
+                <li>Driving a digital customer experience overhaul, managing data enrichment for over 500 SKUs and creating 18+ technical and marketing articles to support the new 'pull' strategy and improve lead generation.</li>
+                <li>Defining a strategic shift from a sales-led 'push' to a marketing-led 'pull' GTM model for a ~200 MSEK portfolio (512 SKUs), enhancing scalability and customer experience.</li>
+                <li>Projecting a +32% increase in stock availability (from 53% to 85%) by leading a supply chain optimization project, discontinuing 40 SKUs so far to enhance margin.</li>
+                <li>Pioneering the implementation of an LLM with Text-to-SQL capabilities, defining business use cases to enable advanced, natural language-based marketing and customer support queries.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 2: Fuji Air Tools -->
+        <div class="experience-card">
+            <h3 class="job-title">Global Product Marketing Manager, Metal Working Tools</h3>
+            <p class="company-info">Fuji Air Tools | Osaka, Japan | 2019 – 2023</p>
+            <ul class="description-list">
+                <li>Improved profitability during a challenging economic period, delivering a +1-percentage point increase in Unit Gross Profit (UGP) through strategic portfolio management.</li>
+                <li>Drove a +7% sales growth for 6 major new product launches versus the previous generation by implementing a customer-centric innovation process based on 34 VOC interviews.</li>
+                <li>Enhanced operational efficiency and focus by rationalizing the product catalogue, discontinuing 500 SKUs to improve production throughput and sales channel clarity.</li>
+                <li>Successfully implemented a value-selling framework across sales teams in 5 countries, directly contributing to a +6% sales increase in targeted regions.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 3: Rodcraft -->
+        <div class="experience-card">
+            <h3 class="job-title">Global Product Marketing Manager, Vehicle Maintenance Tools</h3>
+            <p class="company-info">Rodcraft | Germany & France | 2015 – 2019</p>
+            <ul class="description-list">
+                <li>Revitalized brand performance by increasing the Product Vitality Index (sales from new products) from 19% to 35% through the rapid execution of 40 new product launches.</li>
+                <li>Achieved a concurrent +2-3% increase in both sales and Unit Gross Profit (UGP) while modernizing the brand's market approach.</li>
+                <li>Led the brand's digital transformation, managing a €200k project to launch a new e-commerce website, including the implementation of an PIM system and API integration with SAP.</li>
+                <li>Defined and executed the Strategic Product Plan (SPP) by consolidating needs from 6 global regions, leading to a more focused and effective product roadmap.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 4: Chicago Pneumatic (Atlas Copco Group) -->
+        <div class="experience-card">
+            <h3 class="job-title">Project Leader, New Product Development</h3>
+            <p class="company-info">Chicago Pneumatic (Atlas Copco Group) | Nantes, France | 2010 – 2015</p>
+            <ul class="description-list">
+                <li>Successfully managed ~15 high-vitality sourced product development projects annually.</li>
+                <li>Ensured on-time product launches by leading transversal coordination across marketing, finance, logistics, and purchasing.</li>
+                <li>Increased sales team effectiveness in customer negotiations by delivering technical training to 34 salespeople.</li>
+            </ul>
+        </div>
+
+        <!-- Earlier Engineering Roles -->
+        <h2 class="section-title mt-8">Earlier Engineering Roles</h2>
+
+        <div class="experience-card">
+            <h3 class="job-title">Electrical Components Selection</h3>
+            <p class="company-info">MBDA (for ALTEN) | Paris, France | 2008 – 2010</p>
+            <ul class="description-list">
+                <li>Led the successful implementation of the ROHS standard across multiple projects, managing component replacement and ensuring compliance for a team of 7 designers.</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <h3 class="job-title">Mechanical Designer (Apprenticeship)</h3>
+            <p class="company-info">HAGER ELECTRO | Obernai, France | 2005 – 2008</p>
+            <ul class="description-list">
+                <li>Gained foundational expertise in end-to-end mechanical design, from concept and prototyping to production setup and performance improvement.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="contactMeBtn" class="contact-button">Contact Me</button>
+        <p>&copy; 2025 Clement Baylion. All rights reserved.</p>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <h3 class="modal-title">Clement Baylion</h3>
+            <div class="modal-body">
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:clement-baylion@hotmail.fr" class="text-blue-600 hover:underline">clement-baylion@hotmail.fr</a></p>
+                <p><i class="fas fa-phone"></i> Phone (Sweden): <a href="tel:+46721429108" class="text-blue-600 hover:underline">+46 72 142 91 08</a></p>
+                <p><i class="fas fa-phone"></i> Phone (France): <a href="tel:+33677854937" class="text-blue-600 hover:underline">+33 6 77 85 49 37</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal and buttons
+        const contactBtn = document.getElementById('contactMeBtn');
+        const modal = document.getElementById('contactModal');
+        const closeBtn = document.querySelector('.modal-close-button');
+
+        // When the user clicks the contact button, open the modal
+        contactBtn.onclick = function() {
+            modal.style.display = 'flex'; // Use flex to center content
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // When the user clicks anywhere outside of the modal content, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
