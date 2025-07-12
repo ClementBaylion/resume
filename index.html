@@ -117,7 +117,7 @@
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <div class="md:w-2/3">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform inovation into sales</h2>
+                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform inovation in sales</h2>
                     <p class="text-slate-600 text-base leading-relaxed">
                         No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?
                         <br><br> Get an engineer specialized in marketing.
@@ -144,7 +144,6 @@
                         <h3 class="text-lg font-semibold text-slate-800 mb-4">MBA and Engineer</h3>
                         <p class="text-slate-600">
                             Dual expertise Combining engineering and strategic vision to create replicable success
-
                         </p>
                     </div>
                     <!-- Tool Box 2 (White Background) -->
@@ -165,6 +164,36 @@
                              Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects 
                         </p>
                     </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Full-width AI Marketing Assistant Section (White Background) - Moved to the end -->
+    <div class="bg-white shadow-lg mb-16 rounded-b-2xl"> <!-- Added rounded-b-2xl for consistency -->
+        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
+            <section class="text-center">
+                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8">What can it brings me?</h2>
+                <p class="text-slate-600 mb-6">
+                    I am an agent loaded, made to answer all your questions. <br> Answer based on Clement's resume. Ask me anything. You can even compare your job offer.
+                </p>
+                <textarea id="aiInput" class="w-full p-3 rounded-lg border border-slate-300 mb-4 resize-y" rows="6" placeholder="E.g., 'What are Clement's key strengths in digital marketing?' or 'Compare my job offer for a Product Manager with Clement's profile.'"></textarea>
+                <div class="flex flex-wrap justify-center gap-4 w-full mb-6">
+                    <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
+                        Ask Question
+                    </button>
+                    <button id="compareJobOfferBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
+                        Compare Job Offer
+                    </button>
+                    <button id="summarizeExpertiseBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
+                        Summarize Expertise
+                    </button>
+                </div>
+                <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center">
+                    <p class="text-slate-500">Your AI-generated content will appear here.</p>
+                </div>
+                <div id="loadingIndicator" class="hidden mt-4 text-blue-600">
+                    <span class="loading-spinner"></span> Generating...
                 </div>
             </section>
         </div>
@@ -210,7 +239,7 @@
     <!-- Scripts -->
     <script type="module"> // Changed to type="module"
         // Import the persona instruction from the separate file
-        // import { agentPersonaInstruction } from './persona.js'; // Removed as AI section is removed
+        import { agentPersonaInstruction } from './persona.js';
 
         // Get the modal
         var modal = document.getElementById("contactModal");
@@ -244,13 +273,12 @@
             }
         }
 
-        // JavaScript for AI Marketing Assistant (removed)
-        /*
+        // JavaScript for AI Marketing Assistant
         document.addEventListener('DOMContentLoaded', () => {
             const aiInput = document.getElementById('aiInput');
-            const generateSloganBtn = document.getElementById('generateSloganBtn');
-            const generateSocialPostBtn = document.getElementById('generateSocialPostBtn');
-            const generateValuePropBtn = document.getElementById('generateValuePropBtn');
+            const askQuestionBtn = document.getElementById('askQuestionBtn'); // Changed ID
+            const compareJobOfferBtn = document.getElementById('compareJobOfferBtn'); // Changed ID
+            const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn'); // Changed ID
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
@@ -292,6 +320,7 @@
                     }
                 } catch (error) {
                     aiOutput.innerHTML = `<p class="text-red-500">Error: ${error.message}. Please check your input or try again later.</p>`;
+                    console.error("Error calling Gemini API:", error);
                 } finally {
                     loadingIndicator.classList.add('hidden');
                     aiOutput.classList.remove('flex', 'items-center', 'justify-center'); // Remove centering after loading
@@ -299,7 +328,7 @@
             }
 
             // Event Listeners for buttons
-            generateSloganBtn.addEventListener('click', () => {
+            askQuestionBtn.addEventListener('click', () => { // Changed ID
                 const input = aiInput.value.trim();
                 if (input) {
                     callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
@@ -308,7 +337,7 @@
                 }
             });
 
-            generateSocialPostBtn.addEventListener('click', () => {
+            compareJobOfferBtn.addEventListener('click', () => { // Changed ID
                 const input = aiInput.value.trim();
                 if (input) {
                     callGeminiAPI(`Compare the following job offer with Clement's profile and highlight key matches and potential areas of contribution: ${input}`);
@@ -317,7 +346,7 @@
                 }
             });
 
-            generateValuePropBtn.addEventListener('click', () => {
+            summarizeExpertiseBtn.addEventListener('click', () => { // Changed ID
                 const input = aiInput.value.trim();
                 if (input) {
                     callGeminiAPI(`Summarize Clement's expertise and how it applies to the following context: ${input}`);
@@ -326,7 +355,6 @@
                 }
             });
         });
-        */
     </script>
 </body>
 </html>
