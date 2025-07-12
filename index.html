@@ -117,7 +117,7 @@
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <div class="md:w-2/3">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform inovation into sales</h2>
+                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform inovation in sales</h2>
                     <p class="text-slate-600 text-base leading-relaxed">
                         No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?
                         <br><br> Get an engineer specialized in marketing.
@@ -144,7 +144,6 @@
                         <h3 class="text-lg font-semibold text-slate-800 mb-4">MBA and Engineer</h3>
                         <p class="text-slate-600">
                             Dual expertise Combining engineering and strategic vision to create replicable success
-
                         </p>
                     </div>
                     <!-- Tool Box 2 (White Background) -->
@@ -165,6 +164,32 @@
                              Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects 
                         </p>
                     </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Full-width AI Marketing Assistant Section (White Background) - Moved to the end -->
+    <div class="bg-white shadow-lg mb-16 rounded-b-2xl"> <!-- Added rounded-b-2xl for consistency -->
+        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
+            <section class="text-center">
+                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8">What can it brings me?</h2>
+                <p class="text-slate-600 mb-6">
+                    I am an agent loaded, made to answer all your questions. <br> Answer based on Clement's resume. Ask me anything. You can even compare your job offer.
+                </p>
+                <textarea id="aiInput" class="w-full p-3 rounded-lg border border-slate-300 mb-4 resize-y" rows="6" placeholder="E.g., 'What are Clement's key strengths in digital marketing?' or 'Compare my job offer for a Product Manager with Clement's profile.'"></textarea>
+                <div class="flex flex-wrap justify-center gap-4 w-full mb-6">
+                    <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
+                        Ask Question
+                    </button>
+                    <!-- Removed Compare Job Offer Button -->
+                    <!-- Removed Summarize Expertise Button -->
+                </div>
+                <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center">
+                    <p class="text-slate-500">Your AI-generated content will appear here.</p>
+                </div>
+                <div id="loadingIndicator" class="hidden mt-4 text-blue-600">
+                    <span class="loading-spinner"></span> Generating...
                 </div>
             </section>
         </div>
@@ -210,7 +235,9 @@
     <!-- Scripts -->
     <script type="module"> // Changed to type="module"
         // Import the persona instruction from the separate file
-        // import { agentPersonaInstruction } from './persona.js'; // Removed as AI section is removed
+        import { agentPersonaInstruction } from './persona.js';
+
+        console.log("Script loaded and running."); // Debugging: Script loaded
 
         // Get the modal
         var modal = document.getElementById("contactModal");
@@ -223,41 +250,72 @@
         var span = document.getElementsByClassName("close-button")[0];
 
         // When the user clicks the top button, open the modal 
-        btnTop.onclick = function() {
-            modal.style.display = "flex"; // Use flex to center content
+        if (btnTop) {
+            btnTop.onclick = function() {
+                modal.style.display = "flex"; // Use flex to center content
+                console.log("Top Contact Me button clicked."); // Debugging: Button clicked
+            }
+        } else {
+            console.error("Error: Top Contact Me button not found."); // Debugging: Button not found
         }
 
         // When the user clicks the bottom button, open the modal 
-        btnBottom.onclick = function() {
-            modal.style.display = "flex"; // Use flex to center content
+        if (btnBottom) {
+            btnBottom.onclick = function() {
+                modal.style.display = "flex"; // Use flex to center content
+                console.log("Bottom Contact Me button clicked."); // Debugging: Button clicked
+            }
+        } else {
+            console.error("Error: Bottom Contact Me button not found."); // Debugging: Button not found
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
+        if (span) {
+            span.onclick = function() {
+                modal.style.display = "none";
+                console.log("Close button clicked."); // Debugging: Close button clicked
+            }
+        } else {
+            console.error("Error: Close button not found."); // Debugging: Close button not found
         }
+
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+                console.log("Clicked outside modal."); // Debugging: Clicked outside
             }
         }
 
-        // JavaScript for AI Marketing Assistant (removed)
-        /*
+        // JavaScript for AI Marketing Assistant
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired."); // Debugging: DOMContentLoaded
+
             const aiInput = document.getElementById('aiInput');
-            const generateSloganBtn = document.getElementById('generateSloganBtn');
-            const generateSocialPostBtn = document.getElementById('generateSocialPostBtn');
-            const generateValuePropBtn = document.getElementById('generateValuePropBtn');
+            const askQuestionBtn = document.getElementById('askQuestionBtn');
+            // const compareJobOfferBtn = document.getElementById('compareJobOfferBtn'); // Removed
+            // const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn'); // Removed
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
-            // agentPersonaInstruction is now imported from persona.js
+            // Debugging: Check if AI elements are found
+            console.log("AI Input element:", aiInput);
+            console.log("Ask Question button:", askQuestionBtn);
+            // console.log("Compare Job Offer button:", compareJobOfferBtn); // Removed
+            // console.log("Summarize Expertise button:", summarizeExpertiseBtn); // Removed
+
+            // Check if agentPersonaInstruction is loaded
+            if (typeof agentPersonaInstruction === 'undefined') {
+                console.error("Error: agentPersonaInstruction is undefined. Make sure persona.js is correctly imported and exported.");
+            } else {
+                console.log("agentPersonaInstruction loaded successfully.");
+            }
+
 
             // Function to call Gemini API
             async function callGeminiAPI(userPrompt) {
+                console.log("callGeminiAPI called with prompt:", userPrompt); // Debugging: API call initiated
                 loadingIndicator.classList.remove('hidden');
                 aiOutput.innerHTML = ''; // Clear previous output
                 aiOutput.classList.add('flex', 'items-center', 'justify-center'); // Center loading text
@@ -280,53 +338,41 @@
                     });
 
                     const result = await response.json();
+                    console.log("Gemini API raw response:", result); // Debugging: Raw API response
 
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         const text = result.candidates[0].content.parts[0].text;
                         aiOutput.innerHTML = `<p class="text-slate-700">${text}</p>`;
+                        console.log("AI response displayed."); // Debugging: Response displayed
                     } else {
                         aiOutput.innerHTML = `<p class="text-red-500">Error: Could not generate content. Please try again.</p>`;
-                        console.error("Gemini API response structure unexpected:", result);
+                        console.error("Gemini API response structure unexpected or empty:", result); // Debugging: API response issue
                     }
                 } catch (error) {
                     aiOutput.innerHTML = `<p class="text-red-500">Error: ${error.message}. Please check your input or try again later.</p>`;
+                    console.error("Error calling Gemini API:", error); // Debugging: API call error
                 } finally {
                     loadingIndicator.classList.add('hidden');
                     aiOutput.classList.remove('flex', 'items-center', 'justify-center'); // Remove centering after loading
                 }
             }
 
-            // Event Listeners for buttons
-            generateSloganBtn.addEventListener('click', () => {
-                const input = aiInput.value.trim();
-                if (input) {
-                    callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
-                } else {
-                    aiOutput.innerHTML = '<p class="text-red-500">Please enter a question.</p>';
-                }
-            });
-
-            generateSocialPostBtn.addEventListener('click', () => {
-                const input = aiInput.value.trim();
-                if (input) {
-                    callGeminiAPI(`Compare the following job offer with Clement's profile and highlight key matches and potential areas of contribution: ${input}`);
-                } else {
-                    aiOutput.innerHTML = '<p class="text-red-500">Please paste a job offer to compare.</p>';
-                }
-            });
-
-            generateValuePropBtn.addEventListener('click', () => {
-                const input = aiInput.value.trim();
-                if (input) {
-                    callGeminiAPI(`Summarize Clement's expertise and how it applies to the following context: ${input}`);
-                } else {
-                    aiOutput.innerHTML = '<p class="text-red-500">Please provide a context to summarize expertise.</p>';
-                }
-            });
+            // Event Listener for Ask Question button
+            if (askQuestionBtn) {
+                askQuestionBtn.addEventListener('click', () => {
+                    console.log("Ask Question button clicked."); // Debugging: Button clicked
+                    const input = aiInput.value.trim();
+                    if (input) {
+                        callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
+                    } else {
+                        aiOutput.innerHTML = '<p class="text-red-500">Please enter a question.</p>';
+                    }
+                });
+            }
+            // Removed event listeners for other buttons
         });
-        */
     </script>
 </body>
 </html>
