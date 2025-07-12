@@ -117,7 +117,7 @@
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <div class="md:w-2/3">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform inovation in sales</h2>
+                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform innovation into sales</h2>
                     <p class="text-slate-600 text-base leading-relaxed">
                         No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?
                         <br><br> Get an engineer specialized in marketing.
@@ -183,7 +183,9 @@
                         Ask Question
                     </button>
                     <!-- Removed Compare Job Offer Button -->
-                    <!-- Removed Summarize Expertise Button -->
+                    <button id="summarizeExpertiseBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
+                        Summarize Expertise
+                    </button>
                 </div>
                 <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center">
                     <p class="text-slate-500">Your AI-generated content will appear here.</p>
@@ -294,17 +296,15 @@
 
             const aiInput = document.getElementById('aiInput');
             const askQuestionBtn = document.getElementById('askQuestionBtn');
-            // const compareJobOfferBtn = document.getElementById('compareJobOfferBtn'); // Removed
-            // const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn'); // Removed
+            const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn'); // Re-added
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
             // Debugging: Check if AI elements are found
             console.log("AI Input element:", aiInput);
             console.log("Ask Question button:", askQuestionBtn);
-            // console.log("Compare Job Offer button:", compareJobOfferBtn); // Removed
-            // console.log("Summarize Expertise button:", summarizeExpertiseBtn); // Removed
-
+            console.log("Summarize Expertise button:", summarizeExpertiseBtn); // Debugging: Re-added
+            
             // Check if agentPersonaInstruction is loaded
             if (typeof agentPersonaInstruction === 'undefined') {
                 console.error("Error: agentPersonaInstruction is undefined. Make sure persona.js is correctly imported and exported.");
@@ -371,7 +371,18 @@
                     }
                 });
             }
-            // Removed event listeners for other buttons
+            // Event Listener for Summarize Expertise button
+            if (summarizeExpertiseBtn) {
+                summarizeExpertiseBtn.addEventListener('click', () => {
+                    console.log("Summarize Expertise button clicked."); // Debugging: Button clicked
+                    const input = aiInput.value.trim();
+                    if (input) {
+                        callGeminiAPI(`Summarize Clement's expertise and how it applies to the following context: ${input}`);
+                    } else {
+                        aiOutput.innerHTML = '<p class="text-red-500">Please provide a context to summarize expertise.</p>';
+                    }
+                });
+            }
         });
     </script>
 </body>
