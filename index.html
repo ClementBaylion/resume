@@ -182,7 +182,6 @@
                     <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
                         Ask Question
                     </button>
-                    <!-- Removed Compare Job Offer Button -->
                     <button id="summarizeExpertiseBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
                         Summarize Expertise
                     </button>
@@ -377,7 +376,8 @@
                     console.log("Summarize Expertise button clicked."); // Debugging: Button clicked
                     const input = aiInput.value.trim();
                     if (input) {
-                        callGeminiAPI(`Summarize Clement's expertise and how it applies to the following context: ${input}`);
+                        // Updated prompt for summarizing added value and expertise in English
+                        callGeminiAPI(`Based on the provided context, summarize Clement's added value and expertise. Focus on how his skills and experience translate into concrete benefits. Provide the summary in English: ${input}`);
                     } else {
                         aiOutput.innerHTML = '<p class="text-red-500">Please provide a context to summarize expertise.</p>';
                     }
