@@ -186,7 +186,7 @@
                         Summarize Expertise
                     </button>
                 </div>
-                <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center">
+                <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center" style="white-space: pre-wrap;">
                     <p class="text-slate-500">Your AI-generated content will appear here.</p>
                 </div>
                 <div id="loadingIndicator" class="hidden mt-4 text-blue-600">
@@ -343,8 +343,9 @@
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         const text = result.candidates[0].content.parts[0].text;
-                        aiOutput.innerHTML = `<p class="text-slate-700">${text}</p>`;
-                        console.log("AI response displayed."); // Debugging: Response displayed
+                        // Apply pre-wrap to preserve line breaks
+                        aiOutput.innerHTML = `<p class="text-slate-700" style="white-space: pre-wrap;">${text}</p>`;
+                        console.log("AI response displayed with line breaks."); // Debugging: Response displayed
                     } else {
                         aiOutput.innerHTML = `<p class="text-red-500">Error: Could not generate content. Please try again.</p>`;
                         console.error("Gemini API response structure unexpected or empty:", result); // Debugging: API response issue
@@ -374,13 +375,8 @@
             if (summarizeExpertiseBtn) {
                 summarizeExpertiseBtn.addEventListener('click', () => {
                     console.log("Summarize Expertise button clicked."); // Debugging: Button clicked
-                    const input = aiInput.value.trim();
-                    if (input) {
-                        // Updated prompt for summarizing added value and expertise in English
-                        callGeminiAPI(`Based on the provided context, summarize Clement's added value and expertise. Focus on how his skills and experience translate into concrete benefits. Provide the summary in English: ${input}`);
-                    } else {
-                        aiOutput.innerHTML = '<p class="text-red-500">Please provide a context to summarize expertise.</p>';
-                    }
+                    // No need for 'input' here, directly use the persona and ask for summary
+                    callGeminiAPI(`Based on your persona as Clement Baylion, please provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in English.`);
                 });
             }
         });
