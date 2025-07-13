@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clement Baylion - Profile</title>
+    <title data-i18n="pageTitle">Clement Baylion - Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,12 +75,34 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .language-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+        .language-switcher img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+        .language-switcher img:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="text-slate-800">
 
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <img id="langFlag" src="./images/flag_en.png" alt="Switch language" onclick="switchLanguage()">
+    </div>
+
     <!-- Full-width Header Section (Dark Background) -->
-    <div class="bg-[#2e1b79] rounded-t-2xl shadow-lg mb-16">
+    <div class="bg-[#2e1b79] shadow-lg mb-16"> <!-- Removed rounded-t-2xl -->
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <header class="flex flex-col items-center text-center">
                 <!-- Profile image -->
@@ -88,23 +110,23 @@
                 <div>
                     <!-- Name and professional title -->
                     <h1 class="text-3xl sm:text-4xl font-bold text-white">Clement Baylion</h1>
-                    <p class="text-lg sm:text-xl font-semibold text-blue-200 mt-1">Marketing Manager</p>
+                    <p class="text-lg sm:text-xl font-semibold text-blue-200 mt-1" data-i18n="marketingManager">Marketing Manager</p>
                 </div>
                 
                 <!-- Slogan or value proposition -->
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-8">Customer gets every value</h2> <!-- Increased font size here -->
-                <p class="mt-4 max-w-2xl mx-auto text-md text-blue-100">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-8" data-i18n="customerValueSlogan">Customer gets every value</h2> <!-- Increased font size here -->
+                <p class="mt-4 max-w-2xl mx-auto text-md text-blue-100" data-i18n="sloganDescription">
                     Building the bridge between engineering and customers, ensuring each innovation is perfectly understood and becomes a reason to buy.
                 </p>
 
                 <!-- Action buttons section -->
                 <div class="mt-16 flex flex-wrap justify-center gap-8">
                     <!-- Contact button -->
-                    <a id="contactMeBtn" href="#" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;">
+                    <a id="contactMeBtn" href="#" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;" data-i18n="contactMeBtn">
                         Contact Me
                     </a>
                     <!-- Download CV button -->
-                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;">
+                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;" data-i18n="resumeBtn">
                         Resume
                     </a>
                 </div>
@@ -117,8 +139,8 @@
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 <div class="md:w-2/3">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4">Transform innovation into sales</h2>
-                    <p class="text-slate-600 text-base leading-relaxed">
+                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4" data-i18n="missionTitle">Transform innovation into sales</h2>
+                    <p class="text-slate-600 text-base leading-relaxed" data-i18n="missionDescription">
                         No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?
                         <br><br> Get an engineer specialized in marketing.
                     </p>
@@ -132,17 +154,17 @@
     </div>
 
     <!-- Full-width My Tools of Success Section (Dark Background) -->
-    <div class="bg-[#2e1b79] rounded-b-2xl shadow-lg mb-16">
+    <div class="bg-[#2e1b79] shadow-lg mb-16 rounded-b-2xl"> <!-- Re-added rounded-b-2xl as it's now the last section before the combined block -->
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white border-b-2 border-blue-200 pb-2 mb-8">My Tools of Success</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-white border-b-2 border-blue-200 pb-2 mb-8" data-i18n="toolsTitle">My Tools of Success</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Tool Box 1 (White Background) -->
                     <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
                         <!-- Logo for Tool Box 1 -->
                         <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-4">MBA and Engineer</h3>
-                        <p class="text-slate-600">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4" data-i18n="tool1Title">MBA and Engineer</h3>
+                        <p class="text-slate-600" data-i18n="tool1Description">
                             Dual expertise Combining engineering and strategic vision to create replicable success
                         </p>
                     </div>
@@ -150,8 +172,8 @@
                     <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
                         <!-- Logo for Tool Box 2 -->
                         <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-4 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-3">20 Years Experience</h3>
-                        <p class="text-slate-600">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-3" data-i18n="tool2Title">20 Years Experience</h3>
+                        <p class="text-slate-600" data-i18n="tool2Description">
                             Global perspective built over 20 years, shaping growth strategies for 3 major brands across 2 continents 
                         </p>
                     </div>
@@ -159,8 +181,8 @@
                     <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
                         <!-- Logo for Tool Box 3 -->
                         <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-4 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-3">Proven Execution</h3>
-                        <p class="text-slate-600">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-3" data-i18n="tool3Title">Proven Execution</h3>
+                        <p class="text-slate-600" data-i18n="tool3Description">
                              Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects 
                         </p>
                     </div>
@@ -168,6 +190,92 @@
             </section>
         </div>
     </div>
+
+    <!-- Removed "Activity Sectors" and "Another Infographic" sections -->
+    <!--
+    <div class="bg-white shadow-lg mb-16 rounded-b-2xl py-8">
+        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-8">
+            <div class="flex flex-col md:flex-row items-start gap-16">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8 text-center" data-i18n="activitySectorsTitle">Activity Sectors</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center w-24 flex-shrink-0">
+                                <img src="./images/mechanic.jpg" alt="Mechanic Logo" class="w-8 h-8 rounded-full object-cover mb-1">
+                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="mechanicSkill">Mechanic</span>
+                            </div>
+                            <div class="flex-grow flex items-center gap-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                                <img src="./images/diplome.jpg" alt="Diploma Image" class="max-h-20 w-auto rounded-lg">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center w-24 flex-shrink-0">
+                                <img src="./images/informatique.jpg" alt="Software Logo" class="w-8 h-8 rounded-full object-cover mb-1">
+                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="softwareSkill">Software</span>
+                            </div>
+                            <div class="flex-grow flex items-center gap-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <img src="./images/apprenti.jpg" alt="Apprentice Image" class="max-h-20 w-auto rounded-lg">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center w-24 flex-shrink-0">
+                                <img src="./images/electronic.jpg" alt="Electronic Logo" class="w-8 h-8 rounded-full object-cover mb-1">
+                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="electronicSkill">Electronic</span>
+                            </div>
+                            <div class="flex-grow flex items-center gap-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 40%"></div>
+                                </div>
+                                <img src="./images/play.jpg" alt="Play Image" class="max-h-20 w-auto rounded-lg">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center w-24 flex-shrink-0">
+                                <img src="./images/service.jpg" alt="Service Logo" class="w-8 h-8 rounded-full object-cover mb-1">
+                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="serviceSkill">Service</span>
+                            </div>
+                            <div class="flex-grow flex items-center gap-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 20%"></div>
+                                </div>
+                                <img src="./images/play.jpg" alt="Play Image" class="max-h-20 w-auto rounded-lg">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex flex-col items-center w-24 flex-shrink-0">
+                                <img src="./images/chemistry.jpg" alt="Chemistry Logo" class="w-8 h-8 rounded-full object-cover mb-1">
+                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="chemistrySkill">Chemistry</span>
+                            </div>
+                            <div class="flex-grow flex items-center gap-4">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 20%"></div>
+                                </div>
+                                <img src="./images/baby.jpg" alt="Baby Image" class="max-h-20 w-auto rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/2 bg-slate-100 rounded-xl shadow-lg p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="infographicTitle">Another Infographic Here</h3>
+                    <p class="text-slate-600" data-i18n="infographicDescription">This space is ready for your second infographic or visual element.</p>
+                    <img src="https://placehold.co/300x200/e0e7ff/3730a3?text=Infographic+2" alt="Infographic Placeholder 2" class="mt-6 rounded-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
 
     <!-- Full-width AI Marketing Assistant Section (White Background) - Moved to the end -->
     <!--
@@ -202,11 +310,11 @@
     <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
         <div class="flex flex-col sm:flex-row justify-center gap-8">
             <!-- Contact Me Button (wider) -->
-            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;">
+            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;" data-i18n="contactMeBtn">
                 Contact Me
             </a>
             <!-- Resume Button (wider) -->
-            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;">
+            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;" data-i18n="resumeBtn">
                 Resume
             </a>
         </div>
@@ -215,7 +323,7 @@
     <!-- Footer Section -->
     <footer class="bg-[#2e1b79] text-white text-center py-8">
         <div class="container mx-auto max-w-4xl px-8 sm:px-12">
-            <p>&copy; 2025 Clement Baylion. All rights reserved.</p>
+            <p data-i18n="copyright">&copy; 2025 Clement Baylion. All rights reserved.</p>
             
         </div>
     </footer>
@@ -225,11 +333,11 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-2xl font-bold text-slate-900 mb-4">Contact Me</h3>
-            <p class="text-lg text-slate-700 mb-2">
+            <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="contactMeModalTitle">Contact Me</h3>
+            <p class="text-lg text-slate-700 mb-2" data-i18n="email">
                 Email: <a href="mailto:clement-baylion@hotmail.fr" class="text-blue-600 hover:underline">clement-baylion@hotmail.fr</a>
             </p>
-            <p class="text-lg text-slate-700">
+            <p class="text-lg text-slate-700" data-i18n="phone">
                 Phone: <span class="text-blue-600">+46 72 142 91 08</span>
             </p>
         </div>
@@ -241,6 +349,166 @@
         // import { agentPersonaInstruction } from './persona.js'; // Commented out
 
         console.log("Script loaded and running."); // Debugging: Script loaded
+
+        // Get the modal
+        var modal = document.getElementById("contactModal");
+
+        // Get the button that opens the modal
+        var btnTop = document.getElementById("contactMeBtn"); // Top button
+        var btnBottom = document.getElementById("contactMeBtnBottom"); // Bottom button
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close-button")[0];
+
+        // When the user clicks the top button, open the modal 
+        if (btnTop) {
+            btnTop.onclick = function() {
+                modal.style.display = "flex"; // Use flex to center content
+                console.log("Top Contact Me button clicked."); // Debugging: Button clicked
+            }
+        } else {
+            console.error("Error: Top Contact Me button not found."); // Debugging: Button not found
+        }
+
+        // When the user clicks the bottom button, open the modal 
+        if (btnBottom) {
+            btnBottom.onclick = function() {
+                modal.style.display = "flex"; // Use flex to center content
+                console.log("Bottom Contact Me button clicked."); // Debugging: Button clicked
+            }
+        } else {
+            console.error("Error: Bottom Contact Me button not found."); // Debugging: Button not found
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        if (span) {
+            span.onclick = function() {
+                modal.style.display = "none";
+                console.log("Close button clicked."); // Debugging: Close button clicked
+            }
+        } else {
+            console.error("Error: Close button not found."); // Debugging: Close button not found
+        }
+
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                console.log("Clicked outside modal."); // Debugging: Clicked outside
+            }
+        }
+
+        // Language Switcher Logic
+        const translations = {
+            en: {
+                pageTitle: "Clement Baylion - Profile",
+                marketingManager: "Marketing Manager",
+                customerValueSlogan: "Customer gets every value",
+                sloganDescription: "Building the bridge between engineering and customers, ensuring each innovation is perfectly understood and becomes a reason to buy.",
+                contactMeBtn: "Contact Me",
+                resumeBtn: "Resume",
+                missionTitle: "Transform innovation into sales",
+                missionDescription: "No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?<br><br> Get an engineer specialized in marketing.",
+                toolsTitle: "My Tools of Success",
+                tool1Title: "MBA and Engineer",
+                tool1Description: "Dual expertise Combining engineering and strategic vision to create replicable success",
+                tool2Title: "20 Years Experience",
+                tool2Description: "Global perspective built over 20 years, shaping growth strategies for 3 major brands across 2 continents",
+                tool3Title: "Proven Execution",
+                tool3Description: "Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects",
+                activitySectorsTitle: "Activity Sectors",
+                mechanicSkill: "Mechanic",
+                softwareSkill: "Software",
+                electronicSkill: "Electronic",
+                serviceSkill: "Service",
+                chemistrySkill: "Chemistry",
+                infographicTitle: "Another Infographic Here",
+                infographicDescription: "This space is ready for your second infographic or visual element.",
+                copyright: "&copy; 2025 Clement Baylion. All rights reserved.",
+                contactMeModalTitle: "Contact Me",
+                email: "Email:",
+                phone: "Phone:",
+                // Add more keys as needed for other translatable content
+            },
+            fr: {
+                pageTitle: "Clément Baylion - Profil",
+                marketingManager: "Responsable Marketing",
+                customerValueSlogan: "Le client obtient toute la valeur",
+                sloganDescription: "Bâtir le pont entre l'ingénierie et les clients, en s'assurant que chaque innovation est parfaitement comprise et devient une raison d'acheter.",
+                contactMeBtn: "Contactez-moi",
+                resumeBtn: "CV",
+                missionTitle: "Transformer l'innovation en ventes",
+                missionDescription: "Par manque de temps ou d'attention, les clients peuvent manquer une valeur. Et vous manquez une vente. Comment transformer vos innovations en idées simples ?<br><br> Faites appel à un ingénieur spécialisé en marketing.",
+                toolsTitle: "Mes Outils de Succès",
+                tool1Title: "MBA et Ingénieur",
+                tool1Description: "Double expertise Combinant ingénierie et vision stratégique pour créer un succès reproductible",
+                tool2Title: "20 Ans d'Expérience",
+                tool2Description: "Perspective globale bâtie sur 20 ans, façonnant les stratégies de croissance pour 3 grandes marques sur 2 continents",
+                tool3Title: "Exécution Éprouvée",
+                tool3Description: "Capacité démontrée à obtenir des résultats sur des initiatives autonomes et des projets stratégiques à grande échelle",
+                activitySectorsTitle: "Secteurs d'Activité",
+                mechanicSkill: "Mécanique",
+                softwareSkill: "Logiciel",
+                electronicSkill: "Électronique",
+                serviceSkill: "Service",
+                chemistrySkill: "Chimie",
+                infographicTitle: "Autre Infographie Ici",
+                infographicDescription: "Cet espace est prêt pour votre deuxième infographie ou élément visuel.",
+                copyright: "&copy; 2025 Clément Baylion. Tous droits réservés.",
+                contactMeModalTitle: "Me Contacter",
+                email: "E-mail :",
+                phone: "Téléphone :",
+                // Add more keys as needed
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en'; // Default to English
+
+        const langFlag = document.getElementById('langFlag');
+
+        function updateFlag() {
+            if (currentLang === 'en') {
+                langFlag.src = "./images/flag_fr.png";
+                langFlag.alt = "Switch to French";
+            } else {
+                langFlag.src = "./images/flag_en.png";
+                langFlag.alt = "Switch to English";
+            }
+        }
+
+        window.switchLanguage = function() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            localStorage.setItem('lang', currentLang);
+            applyTranslations();
+            updateFlag();
+        };
+
+        function applyTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    // Special handling for placeholder and alt attributes
+                    if (element.tagName === 'TEXTAREA' && element.placeholder) {
+                        element.placeholder = translations[currentLang][key];
+                    } else if (element.tagName === 'IMG' && element.alt) {
+                        element.alt = translations[currentLang][key];
+                    } else if (element.tagName === 'TITLE') { // For the <title> tag
+                        document.title = translations[currentLang][key];
+                    }
+                    else {
+                        element.innerHTML = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Initial application of translations and flag update on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTranslations();
+            updateFlag();
+        });
+
 
         // Get the modal
         var modal = document.getElementById("contactModal");
