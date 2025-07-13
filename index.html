@@ -80,6 +80,8 @@
             top: 1rem;
             right: 1rem;
             z-index: 10;
+            display: flex; /* Use flex to align flags horizontally */
+            gap: 5px; /* Small gap between flags */
         }
         .language-switcher img {
             width: 30px;
@@ -98,7 +100,9 @@
 
     <!-- Language Switcher -->
     <div class="language-switcher">
-        <img id="langFlag" src="./images/flag_en.png" alt="Switch language" onclick="switchLanguage()">
+        <img id="langFlagEn" src="./images/flag_en.png" data-i18n="flagEnAlt" alt="English" onclick="switchLanguage('en')">
+        <img id="langFlagFr" src="./images/flag_fr.png" data-i18n="flagFrAlt" alt="French" onclick="switchLanguage('fr')">
+        <img id="langFlagSv" src="./images/flag_sv.png" data-i18n="flagSvAlt" alt="Swedish" onclick="switchLanguage('sv')">
     </div>
 
     <!-- Full-width Header Section (Dark Background) -->
@@ -122,12 +126,12 @@
                 <!-- Action buttons section -->
                 <div class="mt-16 flex flex-wrap justify-center gap-8">
                     <!-- Contact button -->
-                    <a id="contactMeBtn" href="#" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;" data-i18n="contactMeBtn">
+                    <a id="contactMeBtn" href="#" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-56 flex items-center justify-center" style="background-color: #645ddc;" data-i18n="contactMeBtn">
                         Contact Me
                     </a>
                     <!-- Download CV button -->
-                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-48" style="background-color: #645ddc;" data-i18n="resumeBtn">
-                        Resume
+                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-56 flex items-center justify-center" style="background-color: #645ddc;" data-i18n="experienceDetailsBtn">
+                        Experience Details
                     </a>
                 </div>
             </header>
@@ -191,131 +195,16 @@
         </div>
     </div>
 
-    <!-- Removed "Activity Sectors" and "Another Infographic" sections -->
-    <!--
-    <div class="bg-white shadow-lg mb-16 rounded-b-2xl py-8">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-8">
-            <div class="flex flex-col md:flex-row items-start gap-16">
-                <div class="w-full md:w-1/2">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8 text-center" data-i18n="activitySectorsTitle">Activity Sectors</h2>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center w-24 flex-shrink-0">
-                                <img src="./images/mechanic.jpg" alt="Mechanic Logo" class="w-8 h-8 rounded-full object-cover mb-1">
-                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="mechanicSkill">Mechanic</span>
-                            </div>
-                            <div class="flex-grow flex items-center gap-4">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
-                                </div>
-                                <img src="./images/diplome.jpg" alt="Diploma Image" class="max-h-20 w-auto rounded-lg">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center w-24 flex-shrink-0">
-                                <img src="./images/informatique.jpg" alt="Software Logo" class="w-8 h-8 rounded-full object-cover mb-1">
-                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="softwareSkill">Software</span>
-                            </div>
-                            <div class="flex-grow flex items-center gap-4">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 60%"></div>
-                                </div>
-                                <img src="./images/apprenti.jpg" alt="Apprentice Image" class="max-h-20 w-auto rounded-lg">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center w-24 flex-shrink-0">
-                                <img src="./images/electronic.jpg" alt="Electronic Logo" class="w-8 h-8 rounded-full object-cover mb-1">
-                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="electronicSkill">Electronic</span>
-                            </div>
-                            <div class="flex-grow flex items-center gap-4">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 40%"></div>
-                                </div>
-                                <img src="./images/play.jpg" alt="Play Image" class="max-h-20 w-auto rounded-lg">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center w-24 flex-shrink-0">
-                                <img src="./images/service.jpg" alt="Service Logo" class="w-8 h-8 rounded-full object-cover mb-1">
-                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="serviceSkill">Service</span>
-                            </div>
-                            <div class="flex-grow flex items-center gap-4">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 20%"></div>
-                                </div>
-                                <img src="./images/play.jpg" alt="Play Image" class="max-h-20 w-auto rounded-lg">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center w-24 flex-shrink-0">
-                                <img src="./images/chemistry.jpg" alt="Chemistry Logo" class="w-8 h-8 rounded-full object-cover mb-1">
-                                <span class="font-semibold text-sm text-slate-800 text-center" data-i18n="chemistrySkill">Chemistry</span>
-                            </div>
-                            <div class="flex-grow flex items-center gap-4">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 20%"></div>
-                                </div>
-                                <img src="./images/baby.jpg" alt="Baby Image" class="max-h-20 w-auto rounded-lg">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full md:w-1/2 bg-slate-100 rounded-xl shadow-lg p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="infographicTitle">Another Infographic Here</h3>
-                    <p class="text-slate-600" data-i18n="infographicDescription">This space is ready for your second infographic or visual element.</p>
-                    <img src="https://placehold.co/300x200/e0e7ff/3730a3?text=Infographic+2" alt="Infographic Placeholder 2" class="mt-6 rounded-lg">
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
-
-    <!-- Full-width AI Marketing Assistant Section (White Background) - Moved to the end -->
-    <!--
-    <div class="bg-white shadow-lg mb-16 rounded-b-2xl">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <section class="text-center">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8">What can it brings me?</h2>
-                <p class="text-slate-600 mb-6">
-                    I am an AI agent with Clement's main profile elements in memory. You can ask me questions about it. <br> (I'm limited in the number of requests, if not working, try in a minute.)
-                </p>
-                <textarea id="aiInput" class="w-full p-3 rounded-lg border border-slate-300 mb-4 resize-y" rows="6" placeholder="E.g., 'What are Clement's key strengths in digital marketing?' or 'Compare my job offer for a Product Manager with Clement's profile.'"></textarea>
-                <div class="flex flex-wrap justify-center gap-4 w-full mb-6">
-                    <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
-                        Ask Question
-                    </button>
-                    <button id="summarizeExpertiseBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md text-sm">
-                        Summarize Expertise
-                    </button>
-                </div>
-                <div id="aiOutput" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-200 text-left text-slate-700 min-h-[100px] flex items-center justify-center" style="white-space: pre-wrap;">
-                    <p class="text-slate-500">Your AI-generated content will appear here.</p>
-                </div>
-                <div id="loadingIndicator" class="hidden mt-4 text-blue-600">
-                    <span class="loading-spinner"></span> Generating...
-                </div>
-            </section>
-        </div>
-    </div>
-    -->
-
     <!-- New Section: Bottom Contact Buttons -->
     <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
         <div class="flex flex-col sm:flex-row justify-center gap-8">
             <!-- Contact Me Button (wider) -->
-            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;" data-i18n="contactMeBtn">
+            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs flex items-center justify-center" style="background-color: #645ddc;" data-i18n="contactMeBtn">
                 Contact Me
             </a>
             <!-- Resume Button (wider) -->
-            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs" style="background-color: #645ddc;" data-i18n="resumeBtn">
-                Resume
+            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs flex items-center justify-center" style="background-color: #645ddc;" data-i18n="experienceDetailsBtn">
+                Experience Details
             </a>
         </div>
     </div>
@@ -407,7 +296,7 @@
                 customerValueSlogan: "Customer gets every value",
                 sloganDescription: "Building the bridge between engineering and customers, ensuring each innovation is perfectly understood and becomes a reason to buy.",
                 contactMeBtn: "Contact Me",
-                resumeBtn: "Resume",
+                experienceDetailsBtn: "Experience Details", // Changed text here
                 missionTitle: "Transform innovation into sales",
                 missionDescription: "No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?<br><br> Get an engineer specialized in marketing.",
                 toolsTitle: "My Tools of Success",
@@ -429,6 +318,9 @@
                 contactMeModalTitle: "Contact Me",
                 email: "Email:",
                 phone: "Phone:",
+                flagEnAlt: "English",
+                flagFrAlt: "French",
+                flagSvAlt: "Swedish",
                 // Add more keys as needed for other translatable content
             },
             fr: {
@@ -437,7 +329,7 @@
                 customerValueSlogan: "Le client obtient toute la valeur",
                 sloganDescription: "Bâtir le pont entre l'ingénierie et les clients, en s'assurant que chaque innovation est parfaitement comprise et devient une raison d'acheter.",
                 contactMeBtn: "Contactez-moi",
-                resumeBtn: "CV",
+                experienceDetailsBtn: "Détails Expérience", // Changed text here
                 missionTitle: "Transformer l'innovation en ventes",
                 missionDescription: "Par manque de temps ou d'attention, les clients peuvent manquer une valeur. Et vous manquez une vente. Comment transformer vos innovations en idées simples ?<br><br> Faites appel à un ingénieur spécialisé en marketing.",
                 toolsTitle: "Mes Outils de Succès",
@@ -459,29 +351,59 @@
                 contactMeModalTitle: "Me Contacter",
                 email: "E-mail :",
                 phone: "Téléphone :",
+                flagEnAlt: "Anglais",
+                flagFrAlt: "Français",
+                flagSvAlt: "Suédois",
                 // Add more keys as needed
+            },
+            sv: {
+                pageTitle: "Clement Baylion - Profil",
+                marketingManager: "Marknadschef",
+                customerValueSlogan: "Kunden får allt värde",
+                sloganDescription: "Bygger bron mellan ingenjörskonst och kunder, säkerställer att varje innovation förstås perfekt och blir en anledning att köpa.",
+                contactMeBtn: "Kontakta mig",
+                experienceDetailsBtn: "Erfarenhetsdetaljer", // Changed text here
+                missionTitle: "Förvandla innovation till försäljning",
+                missionDescription: "Brist på tid eller ouppmärksamhet kan göra att kunder missar ett värde. Och du missar en försäljning. Hur omvandlar man innovationer till enkla idéer?<br><br> Anlita en ingenjör specialiserad på marknadsföring.",
+                toolsTitle: "Mina Framgångsverktyg",
+                tool1Title: "MBA och Ingenjör",
+                tool1Description: "Dubbel expertis som kombinerar ingenjörskonst och strategisk vision för att skapa replikerbar framgång",
+                tool2Title: "20 års Erfarenhet",
+                tool2Description: "Globalt perspektiv byggt över 20 år, som formar tillväxtstrategier för 3 major brands över 2 kontinenter",
+                tool3Title: "Beprövad Genomförande",
+                tool3Description: "Demonstrerad förmåga att leverera resultat på både fristående initiativ och storskaliga strategiska projekt",
+                activitySectorsTitle: "Verksamhetssektorer",
+                mechanicSkill: "Mekaniker",
+                softwareSkill: "Mjukvara",
+                electronicSkill: "Elektronik",
+                serviceSkill: "Service",
+                chemistrySkill: "Kemi",
+                infographicTitle: "Ytterligare Infografik Här",
+                infographicDescription: "Detta utrymme är redo för din andra infografik eller visuella element.",
+                copyright: "&copy; 2025 Clement Baylion. Alla rättigheter förbehållna.",
+                contactMeModalTitle: "Kontakta mig",
+                email: "E-post:",
+                phone: "Telefon:",
+                flagEnAlt: "Engelska",
+                flagFrAlt: "Franska",
+                flagSvAlt: "Svenska",
             }
         };
 
         let currentLang = localStorage.getItem('lang') || 'en'; // Default to English
 
-        const langFlag = document.getElementById('langFlag');
+        const langFlagEn = document.getElementById('langFlagEn');
+        const langFlagFr = document.getElementById('langFlagFr');
+        const langFlagSv = document.getElementById('langFlagSv');
 
-        function updateFlag() {
-            if (currentLang === 'en') {
-                langFlag.src = "./images/flag_fr.png";
-                langFlag.alt = "Switch to French";
-            } else {
-                langFlag.src = "./images/flag_en.png";
-                langFlag.alt = "Switch to English";
-            }
+        function updateFlagsVisibility() {
+            // All flags are always visible
         }
 
-        window.switchLanguage = function() {
-            currentLang = currentLang === 'en' ? 'fr' : 'en';
+        window.switchLanguage = function(langCode) {
+            currentLang = langCode;
             localStorage.setItem('lang', currentLang);
             applyTranslations();
-            updateFlag();
         };
 
         function applyTranslations() {
@@ -506,7 +428,7 @@
         // Initial application of translations and flag update on page load
         document.addEventListener('DOMContentLoaded', () => {
             applyTranslations();
-            updateFlag();
+            updateFlagsVisibility();
         });
 
 
