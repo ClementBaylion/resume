@@ -1,23 +1,27 @@
 // api/gemini.js
 
-// Ce code utilise la syntaxe correcte pour les serveurs Node.js de Vercel.
-// Les objets request (req) et response (res) sont similaires à ceux d'Express.js.
+// Ce code est la version finale et corrigée pour les serveurs Node.js de Vercel.
+// La principale différence est l'utilisation de (req, res) en paramètres,
+// ce qui est standard pour les environnements comme Node.js/Express.
+
 export default async function handler(req, res) {
   // 1. S'assurer que la requête est de type POST
   if (req.method !== 'POST') {
-    // Utiliser l'objet `res` pour envoyer la réponse
+    // On utilise l'objet `res` pour envoyer la réponse d'erreur
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   try {
-    // 2. Récupérer la question. Vercel parse automatiquement le corps JSON.
-    // On accède directement à `req.body` au lieu de `await request.json()`
+    // 2. Récupérer la question.
+    // MODIFICATION IMPORTANTE : Au lieu de `await request.json()`, on utilise `req.body`.
+    // Vercel analyse automatiquement le corps de la requête pour nous sur ce type de fonction.
     const { prompt } = req.body;
     if (!prompt) {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    // 3. Récupérer la clé API secrète depuis les variables d'environnement de Vercel
+    // 3. Récupérer la clé API secrète depuis les variables d'environnement de Vercel.
+    // Cette partie est sécurisée et ne change pas.
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -27,7 +31,7 @@ export default async function handler(req, res) {
 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-    // 4. Préparer et appeler l'API de Google Gemini
+    // 4. Préparer et appeler l'API de Google Gemini. Cette partie ne change pas.
     const payload = {
       contents: [{ role: "user", parts: [{ text: prompt }] }]
     };
@@ -46,10 +50,10 @@ export default async function handler(req, res) {
 
     const result = await geminiResponse.json();
 
-    // 5. Extraire le texte de la réponse et le renvoyer au visiteur
+    // 5. Extraire le texte de la réponse et le renvoyer au visiteur.
     const text = result.candidates[0]?.content?.parts[0]?.text || "Désolé, je n'ai pas pu générer de réponse.";
     
-    // Utiliser res.status().json() pour envoyer la réponse
+    // On utilise `res` pour envoyer la réponse de succès.
     return res.status(200).json({ text: text });
 
   } catch (error) {
