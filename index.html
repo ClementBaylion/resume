@@ -14,12 +14,6 @@
             scroll-behavior: smooth; /* For smooth scrolling to sections */
             background-color: #f8fafc; /* Overall body background (light gray) */
         }
-        .gradient-text {
-            background: linear-gradient(to right, #3b82f6, #1e40af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        /* Styles for the modal */
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
@@ -169,14 +163,13 @@
         </div>
     </div>
 
-    <!-- Full-width AI Marketing Assistant Section (White Background) - Moved to the end -->
-    <!--
+    <!-- AI Marketing Assistant Section -->
     <div class="bg-white shadow-lg mb-16 rounded-b-2xl">
         <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
             <section class="text-center">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8">What can it brings me?</h2>
+                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8">What can it bring me?</h2>
                 <p class="text-slate-600 mb-6">
-                    I am an AI agent with Clement's main profile elements in memory. You can ask me questions about it. <br> (I'm limited in the number of requests, if not working, try in a minute.)
+                    I am an AI agent with Clement's main profile elements in memory. You can ask me questions about it.
                 </p>
                 <textarea id="aiInput" class="w-full p-3 rounded-lg border border-slate-300 mb-4 resize-y" rows="6" placeholder="E.g., 'What are Clement's key strengths in digital marketing?' or 'Compare my job offer for a Product Manager with Clement's profile.'"></textarea>
                 <div class="flex flex-wrap justify-center gap-4 w-full mb-6">
@@ -196,7 +189,6 @@
             </section>
         </div>
     </div>
-    -->
 
     <!-- New Section: Bottom Contact Buttons -->
     <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
@@ -216,7 +208,6 @@
     <footer class="bg-[#2e1b79] text-white text-center py-8">
         <div class="container mx-auto max-w-4xl px-8 sm:px-12">
             <p>&copy; 2025 Clement Baylion. All rights reserved.</p>
-            
         </div>
     </footer>
 
@@ -236,155 +227,91 @@
     </div>
 
     <!-- Scripts -->
-    <script type="module"> // Changed to type="module"
-        // Import the persona instruction from the separate file
-        // import { agentPersonaInstruction } from './persona.js'; // Commented out
+    <script type="module">
+        // --- Modal Logic ---
+        const modal = document.getElementById("contactModal");
+        const btnTop = document.getElementById("contactMeBtn");
+        const btnBottom = document.getElementById("contactMeBtnBottom");
+        const span = document.getElementsByClassName("close-button")[0];
 
-        console.log("Script loaded and running."); // Debugging: Script loaded
-
-        // Get the modal
-        var modal = document.getElementById("contactModal");
-
-        // Get the button that opens the modal
-        var btnTop = document.getElementById("contactMeBtn"); // Top button
-        var btnBottom = document.getElementById("contactMeBtnBottom"); // Bottom button
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close-button")[0];
-
-        // When the user clicks the top button, open the modal 
         if (btnTop) {
-            btnTop.onclick = function() {
-                modal.style.display = "flex"; // Use flex to center content
-                console.log("Top Contact Me button clicked."); // Debugging: Button clicked
-            }
-        } else {
-            console.error("Error: Top Contact Me button not found."); // Debugging: Button not found
+            btnTop.onclick = (e) => { e.preventDefault(); modal.style.display = "flex"; };
         }
-
-        // When the user clicks the bottom button, open the modal 
         if (btnBottom) {
-            btnBottom.onclick = function() {
-                modal.style.display = "flex"; // Use flex to center content
-                console.log("Bottom Contact Me button clicked."); // Debugging: Button clicked
-            }
-        } else {
-            console.error("Error: Bottom Contact Me button not found."); // Debugging: Button not found
+            btnBottom.onclick = (e) => { e.preventDefault(); modal.style.display = "flex"; };
         }
-
-        // When the user clicks on <span> (x), close the modal
         if (span) {
-            span.onclick = function() {
-                modal.style.display = "none";
-                console.log("Close button clicked."); // Debugging: Close button clicked
-            }
-        } else {
-            console.error("Error: Close button not found."); // Debugging: Close button not found
+            span.onclick = () => { modal.style.display = "none"; };
         }
-
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = (event) => {
             if (event.target == modal) {
                 modal.style.display = "none";
-                console.log("Clicked outside modal."); // Debugging: Clicked outside
             }
-        }
+        };
 
-        // JavaScript for AI Marketing Assistant (commented out)
-        /*
+        // --- AI Assistant Logic ---
+        // Importer la persona depuis le fichier séparé.
+        // Assurez-vous que le fichier persona.js existe à la racine de votre projet.
+        import { agentPersonaInstruction } from './persona.js';
+
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOMContentLoaded event fired."); // Debugging: DOMContentLoaded
-
             const aiInput = document.getElementById('aiInput');
             const askQuestionBtn = document.getElementById('askQuestionBtn');
             const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn');
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
-            // Debugging: Check if AI elements are found
-            console.log("AI Input element:", aiInput);
-            console.log("Ask Question button:", askQuestionBtn);
-            console.log("Summarize Expertise button:", summarizeExpertiseBtn);
-            
-            // Check if agentPersonaInstruction is loaded
-            if (typeof agentPersonaInstruction === 'undefined') {
-                console.error("Error: agentPersonaInstruction is undefined. Make sure persona.js is correctly imported and exported.");
-            } else {
-                console.log("agentPersonaInstruction loaded successfully.");
-            }
-
-
-            // Function to call Gemini API
-            async function callGeminiAPI(userPrompt) {
-                console.log("callGeminiAPI called with prompt:", userPrompt); // Debugging: API call initiated
+            async function callBackendAPI(userPrompt) {
                 loadingIndicator.classList.remove('hidden');
-                aiOutput.innerHTML = ''; // Clear previous output
-                aiOutput.classList.add('flex', 'items-center', 'justify-center'); // Center loading text
+                aiOutput.innerHTML = '';
+                aiOutput.classList.add('flex', 'items-center', 'justify-center');
 
                 try {
-                    let chatHistory = [];
-                    // Add the persona instruction as the first part of the chat history
-                    chatHistory.push({ role: "user", parts: [{ text: agentPersonaInstruction }] });
-                    // Then add the user's specific prompt
-                    chatHistory.push({ role: "user", parts: [{ text: userPrompt }] });
-                    
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // Clé API laissée vide pour Canvas. Pour GitHub Pages, voir explication.
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
+                    // L'appel se fait vers votre back-end sécurisé
+                    const response = await fetch('/api/gemini', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify({ prompt: userPrompt })
                     });
 
-                    const result = await response.json();
-                    console.log("Gemini API raw response:", result); // Debugging: Raw API response
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        console.log("AI response raw text (from API):", text); // Debugging: Raw text from API
-                        // Apply pre-wrap to preserve line breaks
-                        aiOutput.innerHTML = `<p class="text-slate-700" style="white-space: pre-wrap;">${text}</p>`;
-                        console.log("AI response displayed with line breaks."); // Debugging: Response displayed
-                    } else {
-                        aiOutput.innerHTML = `<p class="text-red-500">Error: Could not generate content. Please try again.</p>`;
-                        console.error("Gemini API response structure unexpected or empty:", result); // Debugging: API response issue
+                    if (!response.ok) {
+                        const errorResult = await response.json();
+                        throw new Error(errorResult.error || `HTTP error! status: ${response.status}`);
                     }
+
+                    const result = await response.json();
+                    
+                    const text = result.text;
+                    aiOutput.innerHTML = `<p class="text-slate-700" style="white-space: pre-wrap;">${text}</p>`;
+
                 } catch (error) {
-                    aiOutput.innerHTML = `<p class="text-red-500">Error: ${error.message}. Please check your input or try again later.</p>`;
-                    console.error("Error calling Gemini API:", error); // Debugging: API call error
+                    aiOutput.innerHTML = `<p class="text-red-500">Error: ${error.message}. Please check the server logs.</p>`;
+                    console.error("Error calling backend API:", error);
                 } finally {
                     loadingIndicator.classList.add('hidden');
-                    aiOutput.classList.remove('flex', 'items-center', 'justify-center'); // Remove centering after loading
+                    aiOutput.classList.remove('flex', 'items-center', 'justify-center');
                 }
             }
 
-            // Event Listener for Ask Question button
             if (askQuestionBtn) {
                 askQuestionBtn.addEventListener('click', () => {
-                    console.log("Ask Question button clicked."); // Debugging: Button clicked
                     const input = aiInput.value.trim();
                     if (input) {
-                        callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
+                        const fullPrompt = `${agentPersonaInstruction}\n\nAnswer the following question: ${input}`;
+                        callBackendAPI(fullPrompt);
                     } else {
                         aiOutput.innerHTML = '<p class="text-red-500">Please enter a question.</p>';
                     }
                 });
             }
-            // Event Listener for Summarize Expertise button
+
             if (summarizeExpertiseBtn) {
                 summarizeExpertiseBtn.addEventListener('click', () => {
-                    console.log("Summarize Expertise button clicked."); // Debugging: Button clicked
-                    // No need for 'input' here, directly use the persona and ask for summary
-                    callGeminiAPI(`Based on your persona as Clement Baylion, please provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in English.`);
+                    const summaryPrompt = `${agentPersonaInstruction}\n\nPlease provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in English.`;
+                    callBackendAPI(summaryPrompt);
                 });
             }
         });
-        */
     </script>
 </body>
 </html>
