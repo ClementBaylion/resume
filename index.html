@@ -388,37 +388,20 @@
                 summarizeExpertiseBtn.disabled = true;
 
                 try {
-                    // FIX: Combine persona and user prompt into a single message.
-                    // This avoids sending two consecutive 'user' roles, which can cause API errors.
                     const fullPrompt = `${agentPersonaInstruction}\n\n---\n\nUser Request: ${userPrompt}`;
 
-                    const payload = {
-                        contents: [{
-                            role: "user",
-                            parts: [{ text: fullPrompt }]
-                        }]
-                    };
-                    
-                    const apiKey = ""; // API key is handled by the environment
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
+                    // MODIFICATION: Call our own secure API route instead of Google directly.
+                    const response = await fetch('/api/gemini', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ prompt: fullPrompt }), // Send the prompt in the body
                     });
 
                     if (!response.ok) {
-                        // Improved error handling to get more details from the API response
-                        let errorDetails = `API request failed with status ${response.status}`;
-                        try {
-                            const errorData = await response.json();
-                            errorDetails = errorData?.error?.message || JSON.stringify(errorData);
-                        } catch (e) {
-                            // Fallback if the error response isn't JSON
-                            errorDetails = await response.text();
-                        }
-                        throw new Error(errorDetails);
+                        const errorData = await response.json();
+                        throw new Error(errorData.details?.error?.message || errorData.error || 'API request failed');
                     }
 
                     const result = await response.json();
@@ -431,7 +414,7 @@
                     }
                 } catch (error) {
                     aiOutput.innerHTML = `<p class="text-red-500">Erreur: Impossible de générer une réponse. Veuillez réessayer.<br><small>Détail: ${error.message}</small></p>`;
-                    console.error("Error calling Gemini API:", error);
+                    console.error("Error calling API route:", error);
                 } finally {
                     loadingIndicator.style.display = 'none';
                     askQuestionBtn.disabled = false;
@@ -443,7 +426,6 @@
                 askQuestionBtn.addEventListener('click', () => {
                     const input = aiInput.value.trim();
                     if (input) {
-                        // SIMPLIFIED: Just pass the user's question. The persona is handled inside the function.
                         callGeminiAPI(input);
                     } else {
                         aiOutput.innerHTML = '<p class="text-red-500">Veuillez entrer une question.</p>';
@@ -453,7 +435,6 @@
             
             if (summarizeExpertiseBtn) {
                 summarizeExpertiseBtn.addEventListener('click', () => {
-                    // SIMPLIFIED: The prompt is more direct as the persona is handled inside the function.
                     const prompt = `Provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in ${currentLang === 'fr' ? 'French' : 'English'}.`;
                     callGeminiAPI(prompt);
                 });
