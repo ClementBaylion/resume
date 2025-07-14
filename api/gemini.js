@@ -1,63 +1,63 @@
 // api/gemini.js
 
-// Ce code est la version finale et corrigée pour les serveurs Node.js de Vercel.
-// La principale différence est l'utilisation de (req, res) en paramètres,
-// ce qui est standard pour les environnements comme Node.js/Express.
+// This is a Vercel Serverless Function that acts as a secure proxy.
+// It receives a prompt from the front-end, adds the secret API key on the server-side,
+// calls the Google Gemini API, and then sends the response back to the front-end.
 
-export default async function handler(req, res) {
-  // 1. S'assurer que la requête est de type POST
-  if (req.method !== 'POST') {
-    // On utilise l'objet `res` pour envoyer la réponse d'erreur
-    return res.status(405).json({ error: 'Method Not Allowed' });
+export default async function handler(request, response) {
+  // 1. Only allow POST requests
+  if (request.method !== 'POST') {
+    return response.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    // 2. Récupérer la question.
-    // MODIFICATION IMPORTANTE : Au lieu de `await request.json()`, on utilise `req.body`.
-    // Vercel analyse automatiquement le corps de la requête pour nous sur ce type de fonction.
-    const { prompt } = req.body;
+    // 2. Get the prompt from the request body sent by the front-end
+    const { prompt } = request.body;
     if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
+      return response.status(400).json({ error: 'Prompt is required' });
     }
 
-    // 3. Récupérer la clé API secrète depuis les variables d'environnement de Vercel.
-    // Cette partie est sécurisée et ne change pas.
+    // 3. Get the secret API key from Vercel's environment variables
     const apiKey = process.env.GEMINI_API_KEY;
-
     if (!apiKey) {
-      console.error("La variable d'environnement GEMINI_API_KEY n'est pas définie sur Vercel !");
-      return res.status(500).json({ error: 'Internal Server Error' });
+      // This error will be visible in Vercel logs if the variable is not set
+      console.error('GEMINI_API_KEY is not set in environment variables.');
+      return response.status(500).json({ error: 'Server configuration error: API key is missing.' });
     }
+
+    // 4. Prepare the payload for the Google Gemini API
+    const payload = {
+      contents: [{
+        role: "user",
+        parts: [{ text: prompt }]
+      }]
+    };
 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-    // 4. Préparer et appeler l'API de Google Gemini. Cette partie ne change pas.
-    const payload = {
-      contents: [{ role: "user", parts: [{ text: prompt }] }]
-    };
-
+    // 5. Call the Google Gemini API from the server
     const geminiResponse = await fetch(apiUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(payload),
     });
 
     if (!geminiResponse.ok) {
-      const errorText = await geminiResponse.text();
-      console.error("Erreur de l'API Gemini:", errorText);
-      return res.status(geminiResponse.status).json({ error: 'Failed to fetch data from Gemini API' });
+      // If Google's API returns an error, forward it
+      const errorData = await geminiResponse.json();
+      console.error('Error from Gemini API:', errorData);
+      return response.status(geminiResponse.status).json({ error: 'Failed to fetch data from Gemini API.', details: errorData });
     }
 
-    const result = await geminiResponse.json();
-
-    // 5. Extraire le texte de la réponse et le renvoyer au visiteur.
-    const text = result.candidates[0]?.content?.parts[0]?.text || "Désolé, je n'ai pas pu générer de réponse.";
-    
-    // On utilise `res` pour envoyer la réponse de succès.
-    return res.status(200).json({ text: text });
+    // 6. Send the successful response from Google back to our front-end
+    const data = await geminiResponse.json();
+    response.status(200).json(data);
 
   } catch (error) {
-    console.error("Erreur du serveur:", error);
-    return res.status(500).json({ error: 'An internal server error occurred.' });
+    // Handle any other unexpected errors
+    console.error('Internal Server Error:', error);
+    response.status(500).json({ error: 'An internal server error occurred.', details: error.message });
   }
 }
