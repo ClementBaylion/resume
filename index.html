@@ -195,7 +195,8 @@
                             <span data-i18n="summarizeExpertiseBtn">Résumer l'expertise</span>
                         </button>
                     </div>
-                    <div id="aiOutput" class="mt-6 p-4 bg-slate-50 rounded-lg min-h-[100px] text-left">
+                    <!-- MODIFICATION 1: Ajout du style "white-space: pre-wrap" directement ici -->
+                    <div id="aiOutput" class="mt-6 p-4 bg-slate-50 rounded-lg min-h-[100px] text-left text-slate-700" style="white-space: pre-wrap;">
                         <!-- La réponse de l'IA sera affichée ici -->
                     </div>
                     <div id="loadingIndicator" class="hidden mt-4 items-center justify-center flex-col">
@@ -380,9 +381,8 @@
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
             
-            let agentPersonaInstruction = ''; // This will hold the persona text
+            let agentPersonaInstruction = '';
 
-            // --- NEW: Fetch the persona from the external file ---
             try {
                 const response = await fetch('./persona.js');
                 if (!response.ok) {
@@ -392,22 +392,20 @@
                 console.log("Persona loaded successfully.");
             } catch (error) {
                 console.error("Failed to load agent persona:", error);
-                aiOutput.innerHTML = `<p class="text-red-500">Erreur critique: Impossible de charger la personnalité de l'agent. ${error.message}</p>`;
-                // Disable buttons if persona fails to load
+                aiOutput.innerText = `Erreur critique: Impossible de charger la personnalité de l'agent. ${error.message}`;
                 askQuestionBtn.disabled = true;
                 summarizeExpertiseBtn.disabled = true;
-                return; // Stop execution if persona is not available
+                return;
             }
-            // --- END NEW ---
 
             async function callGeminiAPI(userPrompt) {
                 if (!agentPersonaInstruction) {
-                    aiOutput.innerHTML = `<p class="text-red-500">Erreur: La personnalité de l'agent n'est pas chargée.</p>`;
+                    aiOutput.innerText = `Erreur: La personnalité de l'agent n'est pas chargée.`;
                     return;
                 }
 
                 loadingIndicator.style.display = 'flex';
-                aiOutput.innerHTML = '';
+                aiOutput.innerText = '';
                 askQuestionBtn.disabled = true;
                 summarizeExpertiseBtn.disabled = true;
 
@@ -431,12 +429,13 @@
 
                     if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
                         const text = result.candidates[0].content.parts[0].text;
-                        aiOutput.innerHTML = `<p class="text-slate-700" style="white-space: pre-wrap;">${text}</p>`;
+                        // MODIFICATION 2: Utilisation de .innerText pour insérer le texte brut
+                        aiOutput.innerText = text;
                     } else {
                         throw new Error("Invalid or empty response structure from API.");
                     }
                 } catch (error) {
-                    aiOutput.innerHTML = `<p class="text-red-500">Erreur: Impossible de générer une réponse. Veuillez réessayer.<br><small>Détail: ${error.message}</small></p>`;
+                    aiOutput.innerText = `Erreur: Impossible de générer une réponse. Veuillez réessayer.\nDétail: ${error.message}`;
                     console.error("Error calling API route:", error);
                 } finally {
                     loadingIndicator.style.display = 'none';
@@ -451,7 +450,7 @@
                     if (input) {
                         callGeminiAPI(input);
                     } else {
-                        aiOutput.innerHTML = '<p class="text-red-500">Veuillez entrer une question.</p>';
+                        aiOutput.innerText = 'Veuillez entrer une question.';
                     }
                 });
             }
