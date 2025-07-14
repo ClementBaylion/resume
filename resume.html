@@ -3,81 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">Clement Baylion - Profile</title>
+    <title data-i18n="resumePageTitle">Clement Baylion - Professional Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth; /* For smooth scrolling to sections */
-            background-color: #f8fafc; /* Overall body background (light gray) */
+            background-color: #f4f7f6;
+            color: #333;
         }
-        .gradient-text {
-            background: linear-gradient(to right, #3b82f6, #1e40af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
         }
-        /* Styles for the modal */
-        .modal {
+        .header {
+            background-color: #2e1b79;
+            color: #ecf0f1;
+            padding: 3rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative; /* Needed for absolute positioning of the buttons */
+        }
+        .section-title {
+            color: #2c3e50;
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
+        }
+        .experience-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .job-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+        .company-info {
+            font-size: 1.125rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+        .description-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .description-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        .description-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #2e1b79; /* Changed background color to match header */
+            color: #ecf0f1;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        /* Styles for button container */
+        .header-buttons-container {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* Space between buttons */
+            z-index: 10; /* Ensure buttons are above other content */
+        }
+        /* Style for the go back and download buttons */
+        .header-button {
+            background-color: #645ddc;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .header-button:hover {
+            background-color: #534bbd;
+            transform: translateY(-2px);
+        }
+        .header-button i {
+            font-size: 1.25rem;
+        }
+
+        /* Style for the Contact Me button in footer */
+        .contact-button {
+            background-color: #645ddc; /* Changed to match other buttons */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-button:hover {
+            background-color: #534bbd; /* Adjusted hover color */
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
             display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
+            position: fixed;
+            z-index: 1000; /* High z-index to be on top */
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
         }
         .modal-content {
             background-color: #fefefe;
-            margin: auto; /* Center vertically and horizontally */
-            padding: 2.5rem; /* Increased padding */
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            margin: auto;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             position: relative;
-            max-width: 90%; /* Max width for responsiveness */
-            width: 400px; /* Fixed width for larger screens */
-            text-align: center;
+            animation: fadeIn 0.3s ease-out;
         }
-        .close-button {
+        .modal-close-button {
             color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
             position: absolute;
             top: 1rem;
             right: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
-        .close-button:hover,
-        .close-button:focus {
+        .modal-close-button:hover,
+        .modal-close-button:focus {
             color: #333;
             text-decoration: none;
-            cursor: pointer;
         }
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #3b82f6; /* Blue spinner */
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .modal-body p {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .modal-body p i {
+            color: #3498db;
+            font-size: 1.25rem;
         }
         .language-switcher {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 1.5rem; /* Adjusted to be consistent with other buttons */
+            right: 1.5rem; /* Adjusted to be consistent with other buttons */
             z-index: 10;
             display: flex; /* Use flex to align flags horizontally */
             gap: 5px; /* Small gap between flags */
@@ -93,10 +228,14 @@
         .language-switcher img:hover {
             transform: scale(1.1);
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="text-slate-800">
-
+<body>
     <!-- Language Switcher -->
     <div class="language-switcher">
         <img id="langFlagEn" src="./images/flag_en.png" data-i18n="flagEnAlt" alt="English" onclick="switchLanguage('en')">
@@ -104,248 +243,268 @@
         <img id="langFlagSv" src="./images/flag_sv.png" data-i18n="flagSvAlt" alt="Swedish" onclick="switchLanguage('sv')">
     </div>
 
-    <!-- Full-width Header Section (Dark Background) -->
-    <div class="bg-[#2e1b79] shadow-lg mb-16">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <header class="flex flex-col items-center text-center">
-                <img src="./images/Clement profil gray.jpg" alt="Photo de Clement Baylion" class="w-32 h-32 rounded-full mb-4 border-4 border-slate-200">
-                <div>
-                    <h1 class="text-3xl sm:text-4xl font-bold text-white">Clement Baylion</h1>
-                    <p class="text-lg sm:text-xl font-semibold text-blue-200 mt-1" data-i18n="marketingManager">Marketing Manager</p>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mt-8" data-i18n="customerValueSlogan">Customer gets every value</h2>
-                <p class="mt-4 max-w-2xl mx-auto text-md text-blue-100" data-i18n="sloganDescription">
-                    Building the bridge between engineering and customers, ensuring each innovation is perfectly understood and becomes a reason to buy.
-                </p>
-                <div class="mt-16 flex flex-wrap justify-center gap-8">
-                    <a id="contactMeBtn" href="#" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-56 flex items-center justify-center" style="background-color: #645ddc;" data-i18n="contactMeBtn">
-                        Contact Me
-                    </a>
-                    <a href="./resume.html" class="text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 shadow-md w-full sm:w-56 flex items-center justify-center" style="background-color: #645ddc;" data-i18n="experienceDetailsBtn">
-                        Experience Details
-                    </a>
-                </div>
-            </header>
-        </div>
-    </div>
-
-    <!-- Full-width My Mission Section (White Background) -->
-    <div class="bg-white shadow-lg mb-16">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <section class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-                <div class="md:w-2/3">
-                    <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-4" data-i18n="missionTitle">Transform innovation into sales</h2>
-                    <p class="text-slate-600 text-base leading-relaxed" data-i18n="missionDescription">
-                        No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?
-                        <br><br> Get an engineer specialized in marketing.
-                    </p>
-                </div>
-                <div class="md:w-1/3 w-full mt-6 md:mt-0">
-                    <img src="./images/techno.png" alt="Technological setting" class="rounded-xl shadow-lg w-full h-auto object-cover">
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Full-width My Tools of Success Section (Dark Background) -->
-    <div class="bg-[#2e1b79] shadow-lg mb-16">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <section class="text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white border-b-2 border-blue-200 pb-2 mb-8" data-i18n="toolsTitle">My Tools of Success</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
-                        <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-6 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-4" data-i18n="tool1Title">MBA and Engineer</h3>
-                        <p class="text-slate-600" data-i18n="tool1Description">
-                            Dual expertise Combining engineering and strategic vision to create replicable success
-                        </p>
-                    </div>
-                    <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
-                        <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-4 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-3" data-i18n="tool2Title">20 Years Experience</h3>
-                        <p class="text-slate-600" data-i18n="tool2Description">
-                            Global perspective built over 20 years, shaping growth strategies for 3 major brands across 2 continents 
-                        </p>
-                    </div>
-                    <div class="bg-slate-100 p-6 rounded-xl shadow-md flex flex-col items-center">
-                        <img src="./images/logo.png" alt="Tool Logo" class="w-16 h-16 mb-4 rounded-lg">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-3" data-i18n="tool3Title">Proven Execution</h3>
-                        <p class="text-slate-600" data-i18n="tool3Description">
-                             Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects 
-                        </p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-    
-    <!-- AI Marketing Assistant Section -->
-    <div class="bg-white shadow-lg mb-16">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <section class="text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8" data-i18n="aiAssistantTitle">Assistant Marketing IA</h2>
-                <p class="text-slate-600 mb-6" data-i18n="aiAssistantDescription">Posez une question sur mon expérience ou demandez un résumé de mes compétences. (Basé sur l'API Gemini)</p>
-                <div class="max-w-2xl mx-auto">
-                    <textarea id="aiInput" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="3" data-i18n-placeholder="aiInputPlaceholder" placeholder="Ex: Quel est le principal atout de Clément pour une entreprise technologique ?"></textarea>
-                    <div class="mt-4 flex flex-col sm:flex-row justify-center gap-4">
-                        <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center">
-                            <span data-i18n="askQuestionBtn">Poser la question</span>
-                        </button>
-                        <button id="summarizeExpertiseBtn" class="bg-slate-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-700 transition-colors duration-300 flex items-center justify-center">
-                            <span data-i18n="summarizeExpertiseBtn">Résumer l'expertise</span>
-                        </button>
-                    </div>
-                    <div id="aiOutput" class="mt-6 p-4 bg-slate-50 rounded-lg min-h-[100px] text-left">
-                        <!-- La réponse de l'IA sera affichée ici -->
-                    </div>
-                    <div id="loadingIndicator" class="hidden mt-4 items-center justify-center flex-col">
-                        <div class="loading-spinner mx-auto"></div>
-                        <p class="text-slate-500 mt-2" data-i18n="loadingText">Génération de la réponse...</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- New Section: Bottom Contact Buttons -->
-    <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
-        <div class="flex flex-col sm:flex-row justify-center gap-8">
-            <a id="contactMeBtnBottom" href="#" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs flex items-center justify-center" style="background-color: #645ddc;" data-i18n="contactMeBtn">
-                Contact Me
+    <div class="header">
+        <!-- Button Container -->
+        <div class="header-buttons-container">
+            <!-- Go Back Button -->
+            <a href="./index.html" class="header-button" data-i18n="goBackBtn">
+                <i class="fas fa-arrow-left"></i> Go Back
             </a>
-            <a href="./resume.html" class="text-white font-bold py-3 px-12 rounded-lg transition-colors duration-300 shadow-md w-full sm:max-w-xs flex items-center justify-center" style="background-color: #645ddc;" data-i18n="experienceDetailsBtn">
-                Experience Details
+
+            <!-- Download Button -->
+            <a href="resume.pdf" download="resume.pdf" class="header-button" data-i18n="downloadCVBtn">
+                <i class="fas fa-download"></i> Download CV
             </a>
         </div>
+
+        <h1 class="text-5xl font-bold mb-4">Clement Baylion</h1>
+        <p class="text-2xl font-light" data-i18n="marketingManagerResume">Marketing Manager</p>
+        <p class="text-3xl font-semibold text-blue-200 mt-8" data-i18n="connectingInnovationSlogan">Connecting Innovation to Sales Performance</p>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="bg-[#2e1b79] text-white text-center py-8">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12">
-            <p data-i18n="copyright">&copy; 2025 Clement Baylion. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="container">
+        <h2 class="section-title" data-i18n="professionalExperienceTitle">Professional Experience</h2>
 
-    <!-- The Modal (outside all main content blocks) -->
-    <div id="contactModal" class="modal">
+        <!-- Experience 1: Atlas Copco -->
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle1">Global Product Marketing Manager, Air Assembly Tools</h3>
+            <p class="company-info" data-i18n="companyInfo1">Atlas Copco | Nacka, Sweden | 2023 – Present</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc1_1">Driving a digital customer experience overhaul, managing data enrichment for over 500 SKUs and creating 18+ technical and marketing articles to support the new 'pull' strategy and improve lead generation.</li>
+                <li data-i18n="jobDesc1_2">Defining a strategic shift from a sales-led 'push' to a marketing-led 'pull' GTM model for a ~200 MSEK portfolio (512 SKUs), enhancing scalability and customer experience.</li>
+                <li data-i18n="jobDesc1_3">Projecting a +32% increase in stock availability (from 53% to 85%) by leading a supply chain optimization project, discontinuing 40 SKUs so far to enhance margin.</li>
+                <li data-i18n="jobDesc1_4">Pioneering the implementation of an LLM with Text-to-SQL capabilities, defining business use cases to enable advanced, natural language-based marketing and customer support queries.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 2: Fuji Air Tools -->
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle2">Global Product Marketing Manager, Metal Working Tools</h3>
+            <p class="company-info" data-i18n="companyInfo2">Fuji Air Tools | Osaka, Japan | 2019 – 2023</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc2_1">Improved profitability during a challenging economic period, delivering a +1-percentage point increase in Unit Gross Profit (UGP) through strategic portfolio management.</li>
+                <li data-i18n="jobDesc2_2">Drove a +7% sales growth for 6 major new product launches versus the previous generation by implementing a customer-centric innovation process based on 34 VOC interviews.</li>
+                <li data-i18n="jobDesc2_3">Enhanced operational efficiency and focus by rationalizing the product catalogue, discontinuing 500 SKUs to improve production throughput and sales channel clarity.</li>
+                <li data-i18n="jobDesc2_4">Successfully implemented a value-selling framework across sales teams in 5 countries, directly contributing to a +6% sales increase in targeted regions.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 3: Rodcraft -->
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle3">Global Product Marketing Manager, Vehicle Maintenance Tools</h3>
+            <p class="company-info" data-i18n="companyInfo3">Rodcraft | Germany & France | 2015 – 2019</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc3_1">Revitalized brand performance by increasing the Product Vitality Index (sales from new products) from 19% to 35% through the rapid execution of 40 new product launches.</li>
+                <li data-i18n="jobDesc3_2">Achieved a concurrent +2-3% increase in both sales and Unit Gross Profit (UGP) while modernizing the brand's market approach.</li>
+                <li data-i18n="jobDesc3_3">Led the brand's digital transformation, managing a €200k project to launch a new e-commerce website, including the implementation of an PIM system and API integration with SAP.</li>
+                <li data-i18n="jobDesc3_4">Defined and executed the Strategic Product Plan (SPP) by consolidating needs from 6 global regions, leading to a more focused and effective product roadmap.</li>
+            </ul>
+        </div>
+
+        <!-- Experience 4: Chicago Pneumatic (Atlas Copco Group) -->
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle4">Project Leader, New Product Development</h3>
+            <p class="company-info" data-i18n="companyInfo4">Chicago Pneumatic (Atlas Copco Group) | Nantes, France | 2010 – 2015</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc4_1">Successfully managed ~15 high-vitality sourced product development projects annually.</li>
+                <li data-i18n="jobDesc4_2">Ensured on-time product launches by leading transversal coordination across marketing, finance, logistics, and purchasing.</li>
+                <li data-i18n="jobDesc4_3">Increased sales team effectiveness in customer negotiations by delivering technical training to 34 salespeople.</li>
+            </ul>
+        </div>
+
+        <!-- Earlier Engineering Roles -->
+        <h2 class="section-title mt-8" data-i18n="earlierEngineeringRolesTitle">Earlier Engineering Roles</h2>
+
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle5">Electrical Components Selection</h3>
+            <p class="company-info" data-i18n="companyInfo5">MBDA (for ALTEN) | Paris, France | 2008 – 2010</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc5_1">Led the successful implementation of the ROHS standard across multiple projects, managing component replacement and ensuring compliance for a team of 7 designers.</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <h3 class="job-title" data-i18n="jobTitle6">Mechanical Designer (Apprenticeship)</h3>
+            <p class="company-info" data-i18n="companyInfo6">HAGER ELECTRO | Obernai, France | 2005 – 2008</p>
+            <ul class="description-list">
+                <li data-i18n="jobDesc6_1">Gained foundational expertise in end-to-end mechanical design, from concept and prototyping to production setup and performance improvement.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="contactMeBtn" class="contact-button" data-i18n="contactMeBtn">Contact Me</button>
+        <p data-i18n="copyrightResume">&copy; 2025 Clement Baylion. All rights reserved.</p>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h3 class="text-2xl font-bold text-slate-900 mb-4" data-i18n="contactMeModalTitle">Contact Me</h3>
-            <p class="text-lg text-slate-700 mb-2" data-i18n="email">
-                Email: <a href="mailto:clement-baylion@hotmail.fr" class="text-blue-600 hover:underline">clement-baylion@hotmail.fr</a>
-            </p>
-            <p class="text-lg text-slate-700" data-i18n="phone">
-                Phone: <span class="text-blue-600">+46 72 142 91 08</span>
-            </p>
+            <span class="modal-close-button">&times;</span>
+            <h3 class="modal-title" data-i18n="contactMeModalTitle">Clement Baylion</h3>
+            <div class="modal-body">
+                <p><i class="fas fa-envelope"></i> <span data-i18n="email">Email:</span> <a href="mailto:clement-baylion@hotmail.fr" class="text-blue-600 hover:underline">clement-baylion@hotmail.fr</a></p>
+                <p><i class="fas fa-phone"></i> <span data-i18n="phoneSweden">Phone (Sweden):</span> <a href="tel:+46721429108" class="text-blue-600 hover:underline">+46 72 142 91 08</a></p>
+                <p><i class="fas fa-phone"></i> <span data-i18n="phoneFrance">Phone (France):</span> <a href="tel:+33677854937" class="text-blue-600 hover:underline">+33 6 77 85 49 37</a></p>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script type="module">
-        // --- MODAL & LANGUAGE SCRIPT (No changes here) ---
-        var modal = document.getElementById("contactModal");
-        var btnTop = document.getElementById("contactMeBtn");
-        var btnBottom = document.getElementById("contactMeBtnBottom");
-        var span = document.getElementsByClassName("close-button")[0];
-        if(btnTop) btnTop.onclick = () => modal.style.display = "flex";
-        if(btnBottom) btnBottom.onclick = () => modal.style.display = "flex";
-        if(span) span.onclick = () => modal.style.display = "none";
-        window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; };
-
+    <script>
+        // Language Switcher Logic for resume.html
         const translations = {
             en: {
-                pageTitle: "Clement Baylion - Profile",
-                marketingManager: "Marketing Manager",
-                customerValueSlogan: "Customer gets every value",
-                sloganDescription: "Building the bridge between engineering and customers, ensuring each innovation is perfectly understood and becomes a reason to buy.",
+                resumePageTitle: "Clement Baylion - Professional Experience",
+                goBackBtn: "Go Back",
+                downloadCVBtn: "Download CV",
+                marketingManagerResume: "Marketing Manager",
+                connectingInnovationSlogan: "Connecting Innovation to Sales Performance",
+                professionalExperienceTitle: "Professional Experience",
+                jobTitle1: "Global Product Marketing Manager, Air Assembly Tools", // Updated job title
+                companyInfo1: "Atlas Copco | Nacka, Sweden | 2023 – Present",
+                jobDesc1_1: "Driving a digital customer experience overhaul, managing data enrichment for over 500 SKUs and creating 18+ technical and marketing articles to support the new 'pull' strategy and improve lead generation.",
+                jobDesc1_2: "Defining a strategic shift from a sales-led 'push' to a marketing-led 'pull' GTM model for a ~200 MSEK portfolio (512 SKUs), enhancing scalability and customer experience.",
+                jobDesc1_3: "Projecting a +32% increase in stock availability (from 53% to 85%) by leading a supply chain optimization project, discontinuing 40 SKUs so far to enhance margin.",
+                jobDesc1_4: "Pioneering the implementation of an LLM with Text-to-SQL capabilities, defining business use cases to enable advanced, natural language-based marketing and customer support queries.",
+                jobTitle2: "Global Product Marketing Manager, Metal Working Tools",
+                companyInfo2: "Fuji Air Tools | Osaka, Japan | 2019 – 2023",
+                jobDesc2_1: "Improved profitability during a challenging economic period, delivering a +1-percentage point increase in Unit Gross Profit (UGP) through strategic portfolio management.",
+                jobDesc2_2: "Drove a +7% sales growth for 6 major new product launches versus the previous generation by implementing a customer-centric innovation process based on 34 VOC interviews.",
+                jobDesc2_3: "Enhanced operational efficiency and focus by rationalizing the product catalogue, discontinuing 500 SKUs to improve production throughput and sales channel clarity.",
+                jobDesc2_4: "Successfully implemented a value-selling framework across sales teams in 5 countries, directly contributing to a +6% sales increase in targeted regions.",
+                jobTitle3: "Global Product Marketing Manager, Vehicle Maintenance Tools",
+                companyInfo3: "Rodcraft | Germany & France | 2015 – 2019",
+                jobDesc3_1: "Revitalized brand performance by increasing the Product Vitality Index (sales from new products) from 19% to 35% through the rapid execution of 40 new product launches.",
+                jobDesc3_2: "Achieved a concurrent +2-3% increase in both sales and Unit Gross Profit (UGP) while modernizing the brand's market approach.",
+                jobDesc3_3: "Led the brand's digital transformation, managing a €200k project to launch a new e-commerce website, including the implementation of an PIM system and API integration with SAP.",
+                jobDesc3_4: "Defined and executed the Strategic Product Plan (SPP) by consolidating needs from 6 global regions, leading to a more focused and effective product roadmap.",
+                jobTitle4: "Project Leader, New Product Development",
+                companyInfo4: "Chicago Pneumatic (Atlas Copco Group) | Nantes, France | 2010 – 2015",
+                jobDesc4_1: "Successfully managed ~15 high-vitality sourced product development projects annually.",
+                jobDesc4_2: "Ensured on-time product launches by leading transversal coordination across marketing, finance, logistics, and purchasing.",
+                jobDesc4_3: "Increased sales team effectiveness in customer negotiations by delivering technical training to 34 salespeople.",
+                earlierEngineeringRolesTitle: "Earlier Engineering Roles",
+                jobTitle5: "Electrical Components Selection",
+                companyInfo5: "MBDA (for ALTEN) | Paris, France | 2008 – 2010",
+                jobDesc5_1: "Led the successful implementation of the ROHS standard across multiple projects, managing component replacement and ensuring compliance for a team of 7 designers.",
+                jobTitle6: "Mechanical Designer (Apprenticeship)",
+                companyInfo6: "HAGER ELECTRO | Obernai, France | 2005 – 2008",
+                jobDesc6_1: "Gained foundational expertise in end-to-end mechanical design, from concept and prototyping to production setup and performance improvement.",
                 contactMeBtn: "Contact Me",
-                experienceDetailsBtn: "Experience Details",
-                missionTitle: "Transform innovation into sales",
-                missionDescription: "No time or not paying attention, customers can miss a value. And you miss a sales. How to transform your innovations into easy ideas?<br><br> Get an engineer specialized in marketing.",
-                toolsTitle: "My Tools of Success",
-                tool1Title: "MBA and Engineer",
-                tool1Description: "Dual expertise Combining engineering and strategic vision to create replicable success",
-                tool2Title: "20 Years Experience",
-                tool2Description: "Global perspective built over 20 years, shaping growth strategies for 3 major brands across 2 continents",
-                tool3Title: "Proven Execution",
-                tool3Description: "Demonstrated ability to deliver results on both stand-alone initiatives and large-scale strategic projects",
-                copyright: "&copy; 2025 Clement Baylion. All rights reserved.",
-                contactMeModalTitle: "Contact Me",
+                copyrightResume: "&copy; 2025 Clement Baylion. All rights reserved.",
+                contactMeModalTitle: "Clement Baylion",
                 email: "Email:",
-                phone: "Phone:",
+                phoneSweden: "Phone (Sweden):",
+                phoneFrance: "Phone (France):",
                 flagEnAlt: "English",
                 flagFrAlt: "French",
                 flagSvAlt: "Swedish",
-                aiAssistantTitle: "AI Marketing Assistant",
-                aiAssistantDescription: "Ask a question about my experience or request a summary of my skills. (Powered by Gemini API)",
-                aiInputPlaceholder: "Ex: What is Clement's main asset for a tech company?",
-                askQuestionBtn: "Ask Question",
-                summarizeExpertiseBtn: "Summarize Expertise",
-                loadingText: "Generating response...",
             },
             fr: {
-                pageTitle: "Clément Baylion - Profil",
-                marketingManager: "Responsable Marketing",
-                customerValueSlogan: "Le client obtient toute la valeur",
-                sloganDescription: "Bâtir le pont entre l'ingénierie et les clients, en s'assurant que chaque innovation est parfaitement comprise et devient une raison d'acheter.",
-                contactMeBtn: "Contactez-moi",
-                experienceDetailsBtn: "Détails Expérience",
-                missionTitle: "Transformer l'innovation en ventes",
-                missionDescription: "Par manque de temps ou d'attention, les clients peuvent manquer une valeur. Et vous manquez une vente. Comment transformer vos innovations en idées simples ?<br><br> Faites appel à un ingénieur spécialisé en marketing.",
-                toolsTitle: "Mes Outils de Succès",
-                tool1Title: "MBA et Ingénieur",
-                tool1Description: "Double expertise Combinant ingénierie et vision stratégique pour créer un succès reproductible",
-                tool2Title: "20 Ans d'Expérience",
-                tool2Description: "Perspective globale bâtie sur 20 ans, façonnant les stratégies de croissance pour 3 grandes marques sur 2 continents",
-                tool3Title: "Exécution Éprouvée",
-                tool3Description: "Capacité démontrée à obtenir des résultats sur des initiatives autonomes et des projets stratégiques à grande échelle",
-                copyright: "&copy; 2025 Clément Baylion. Tous droits réservés.",
-                contactMeModalTitle: "Me Contacter",
+                resumePageTitle: "Clément Baylion - Expérience Professionnelle",
+                goBackBtn: "Retour",
+                downloadCVBtn: "Télécharger le CV",
+                marketingManagerResume: "Responsable Marketing",
+                connectingInnovationSlogan: "Connecter l'Innovation à la Performance Commerciale",
+                professionalExperienceTitle: "Expérience Professionnelle",
+                jobTitle1: "Chef de Produit Marketing Global, Outils d'Assemblage Pneumatiques", // Updated job title
+                companyInfo1: "Atlas Copco | Nacka, Suède | 2023 – Actuel",
+                jobDesc1_1: "Pilotage d'une refonte de l'expérience client numérique, gestion de l'enrichissement des données pour plus de 500 SKU et création de plus de 18 articles techniques et marketing pour soutenir la nouvelle stratégie de 'pull' et améliorer la génération de leads.",
+                jobDesc1_2: "Définition d'un changement stratégique d'un modèle GTM 'push' axé sur les ventes vers un modèle 'pull' axé sur le marketing pour un portefeuille d'environ 200 MSEK (512 SKU), améliorant l'évolutivité et l'expérience client.",
+                jobDesc1_3: "Projection d'une augmentation de +32% de la disponibilité des stocks (de 53% à 85%) en menant un projet d'optimisation de la chaîne d'approvisionnement, avec l'arrêt de 40 SKU à ce jour pour améliorer la marge.",
+                jobDesc1_4: "Pionnier dans la mise en œuvre d'un LLM avec des capacités Text-to-SQL, définissant des cas d'utilisation métier pour permettre des requêtes marketing et de support client avancées basées sur le langage naturel.",
+                jobTitle2: "Chef de Produit Marketing Global, Outils de Travail du Métal",
+                companyInfo2: "Fuji Air Tools | Osaka, Japon | 2019 – 2023",
+                jobDesc2_1: "Amélioration de la rentabilité pendant une période économique difficile, avec une augmentation de +1 point de pourcentage du bénéfice brut unitaire (UGP) grâce à une gestion stratégique du portefeuille.",
+                jobDesc2_2: "Accélération d'une croissance des ventes de +7% pour 6 lancements majeurs de nouveaux produits par rapport à la génération précédente en mettant en œuvre un processus d'innovation centré sur le client basé sur 34 entretiens VOC.",
+                jobDesc2_3: "Amélioration de l'efficacité opérationnelle et de la concentration en rationalisant le catalogue de produits, avec l'arrêt de 500 SKU pour améliorer le débit de production et la clarté du canal de vente.",
+                jobDesc2_4: "Mise en œuvre réussie d'un cadre de vente par la valeur auprès des équipes commerciales dans 5 pays, contribuant directement à une augmentation des ventes de +6% dans les régions ciblées.",
+                jobTitle3: "Chef de Produit Marketing Global, Outils d'Entretien Véhicules",
+                companyInfo3: "Rodcraft | Allemagne & France | 2015 – 2019",
+                jobDesc3_1: "Revitalisation de la performance de la marque en augmentant l'indice de vitalité des produits (ventes de nouveaux produits) de 19% à 35% grâce à l'exécution rapide de 40 lancements de nouveaux produits.",
+                jobDesc3_2: "Obtention d'une augmentation concurrente de +2-3% des ventes et du bénéfice brut unitaire (UGP) tout en modernisant l'approche marché de la marque.",
+                jobDesc3_3: "Direction de la transformation numérique de la marque, gestion d'un projet de 200k€ pour lancer un nouveau site e-commerce, incluant la mise en œuvre d'un système PIM et l'intégration API avec SAP.",
+                jobDesc3_4: "Définition et exécution du Plan Produit Stratégique (SPP) en consolidant les besoins de 6 régions mondiales, menant à une feuille de route produit plus ciblée et efficace.",
+                jobTitle4: "Chef de Projet, Développement de Nouveaux Produits",
+                companyInfo4: "Chicago Pneumatic (Groupe Atlas Copco) | Nantes, France | 2010 – 2015",
+                jobDesc4_1: "Gestion réussie d'environ 15 projets annuels de développement de produits à forte vitalité.",
+                jobDesc4_2: "Assurance des lancements de produits dans les délais en dirigeant la coordination transversale entre le marketing, la finance, la logistique et les achats.",
+                jobDesc4_3: "Augmentation de l'efficacité de l'équipe commerciale dans les négociations clients en dispensant une formation technique à 34 vendeurs.",
+                earlierEngineeringRolesTitle: "Rôles d'Ingénierie Précédents",
+                jobTitle5: "Sélection de Composants Électriques",
+                companyInfo5: "MBDA (pour ALTEN) | Paris, France | 2008 – 2010",
+                jobDesc5_1: "Direction de la mise en œuvre réussie de la norme ROHS sur plusieurs projets, gestion du remplacement des composants et garantie de la conformité pour une équipe de 7 concepteurs.",
+                jobTitle6: "Concepteur Mécanique (Apprentissage)",
+                companyInfo6: "HAGER ELECTRO | Obernai, France | 2005 – 2008",
+                jobDesc6_1: "Acquisition d'une expertise fondamentale en conception mécanique de bout en bout, du concept et prototypage à la mise en place de la production et l'amélioration des performances.",
+                contactMeBtn: "Me Contacter",
+                copyrightResume: "&copy; 2025 Clément Baylion. Tous droits réservés.",
+                contactMeModalTitle: "Clément Baylion",
                 email: "E-mail :",
-                phone: "Téléphone :",
+                phoneSweden: "Téléphone (Suède) :",
+                phoneFrance: "Téléphone (France) :",
                 flagEnAlt: "Anglais",
                 flagFrAlt: "Français",
                 flagSvAlt: "Suédois",
-                aiAssistantTitle: "Assistant Marketing IA",
-                aiAssistantDescription: "Posez une question sur mon expérience ou demandez un résumé de mes compétences. (Basé sur l'API Gemini)",
-                aiInputPlaceholder: "Ex: Quel est le principal atout de Clément pour une entreprise technologique ?",
-                askQuestionBtn: "Poser la question",
-                summarizeExpertiseBtn: "Résumer l'expertise",
-                loadingText: "Génération de la réponse...",
             },
             sv: {
-                pageTitle: "Clement Baylion - Profil",
-                marketingManager: "Marknadschef",
-                customerValueSlogan: "Kunden får allt värde",
-                sloganDescription: "Bygger bron mellan ingenjörskonst och kunder, säkerställer att varje innovation förstås perfekt och blir en anledning att köpa.",
+                resumePageTitle: "Clement Baylion - Professionell Erfarenhet",
+                goBackBtn: "Gå tillbaka",
+                downloadCVBtn: "Ladda ner CV",
+                marketingManagerResume: "Marknadschef",
+                connectingInnovationSlogan: "Koppla innovation till försäljningsresultat",
+                professionalExperienceTitle: "Professionell Erfarenhet",
+                jobTitle1: "Global Produktmarknadschef, Luftmonteringsverktyg", // Updated job title
+                companyInfo1: "Atlas Copco | Nacka, Sverige | 2023 – Nuvarande",
+                jobDesc1_1: "Driver en digital kundupplevelseöversyn, hanterar databerikning för över 500 SKU:er och skapar 18+ tekniska och marknadsföringsartiklar för att stödja den nya 'pull'-strategin och förbättra leadgenerering.",
+                jobDesc1_2: "Definierar ett strategiskt skifte från en säljstyrd 'push'- till en marknadsstyrd 'pull'-GTM-modell för en portfölj på ~200 MSEK (512 SKU:er), vilket förbättrar skalbarhet och kundupplevelse.",
+                jobDesc1_3: "Projekterar en +32% ökning i lagertillgänglighet (från 53% till 85%) genom att leda ett projekt för optimering av leveranskedjan, avveckling av 40 SKU:er hittills för att förbättra marginalen.",
+                jobDesc1_4: "Pionjär inom implementering av en LLM med Text-till-SQL-kapacitet, definierar affärsfall för att möjliggöra avancerade, naturligt språkbaserade marknadsförings- och kundsupportfrågor.",
+                jobTitle2: "Global Produktmarknadschef, Metallbearbetningsverktyg",
+                companyInfo2: "Fuji Air Tools | Osaka, Japan | 2019 – 2023",
+                jobDesc2_1: "Förbättrad lönsamhet under en utmanande ekonomisk period, levererar en +1 procentenhetsökning i bruttovinst per enhet (UGP) genom strategisk portföljhantering.",
+                jobDesc2_2: "Drev en +7% försäljningstillväxt för 6 stora nya produktlanseringar jämfört med föregående generation genom att implementera en kundcentrerad innovationsprocess baserad på 34 VOC-intervjuer.",
+                jobDesc2_3: "Förbättrad operativ effektivitet och fokus genom att rationalisera produktkatalogen, avveckla 500 SKU:er för att förbättra produktionsgenomströmning och försäljningskanalens tydlighet.",
+                jobDesc2_4: "Framgångsrikt implementerat ett värdeförsäljningsramverk över säljteam i 5 länder, vilket direkt bidrog till en +6% försäljningstillväxt i riktade regioner.",
+                jobTitle3: "Global Produktmarknadschef, Fordonsunderhållsverktyg",
+                companyInfo3: "Rodcraft | Tyskland & Frankrike | 2015 – 2019",
+                jobDesc3_1: "Återupplivade varumärkesprestanda genom att öka produktvitalitetsindex (försäljning från nya produkter) från 19% till 35% genom snabb exekvering av 40 nya produktlanseringar.",
+                jobDesc3_2: "Uppnådde en samtidig +2-3% ökning av både försäljning och bruttovinst per enhet (UGP) samtidigt som varumärkets marknadsstrategi moderniserades.",
+                jobDesc3_3: "Ledde varumärkets digitala transformation, hanterade ett projekt på 200k€ för att lansera en ny e-handelswebbplats, inklusive implementering av ett PIM-system och API-integration med SAP.",
+                jobDesc3_4: "Definierade och genomförde den strategiska produktplanen (SPP) genom att konsolidera behov från 6 globala regioner, vilket ledde till en mer fokuserad och effektiv produktfärdplan.",
+                jobTitle4: "Projektledare, Ny Produktutveckling",
+                companyInfo4: "Chicago Pneumatic (Atlas Copco Group) | Nantes, Frankrike | 2010 – 2015",
+                jobDesc4_1: "Framgångsrikt hanterade ~15 högvitale produktutvecklingsprojekt årligen.",
+                jobDesc4_2: "Säkerställde produktlanseringar i tid genom att leda tvärgående koordinering över marknadsföring, finans, logistik och inköp.",
+                jobDesc4_3: "Ökad säljteamets effektivitet i kundförhandlingar genom att leverera teknisk utbildning till 34 säljare.",
+                earlierEngineeringRolesTitle: "Tidigare Ingenjörsroller",
+                jobTitle5: "Val av Elektriska Komponenter",
+                companyInfo5: "MBDA (för ALTEN) | Paris, Frankrike | 2008 – 2010",
+                jobDesc5_1: "Ledde framgångsrik implementering av ROHS-standarden över flera projekt, hanterade komponentbyte och säkerställde efterlevnad för ett team av 7 designers.",
+                jobTitle6: "Mekanisk Designer (Lärlingsutbildning)",
+                companyInfo6: "HAGER ELECTRO | Obernai, Frankrike | 2005 – 2008",
+                jobDesc6_1: "Fick grundläggande expertis inom mekanisk design från början till slut, från koncept och prototyper till produktionsuppsättning och prestandaförbättring.",
                 contactMeBtn: "Kontakta mig",
-                experienceDetailsBtn: "Erfarenhetsdetaljer",
-                missionTitle: "Förvandla innovation till försäljning",
-                missionDescription: "Brist på tid eller ouppmärksamhet kan göra att kunder missar ett värde. Och du missar en försäljning. Hur omvandlar man innovationer till enkla idéer?<br><br> Anlita en ingenjör specialiserad på marknadsföring.",
-                toolsTitle: "Mina Framgångsverktyg",
-                tool1Title: "MBA och Ingenjör",
-                tool1Description: "Dubbel expertis som kombinerar ingenjörskonst och strategisk vision för att skapa replikerbar framgång",
-                tool2Title: "20 års Erfarenhet",
-                tool2Description: "Globalt perspektiv byggt över 20 år, som formar tillväxtstrategier för 3 major brands över 2 kontinenter",
-                tool3Title: "Beprövad Genomförande",
-                tool3Description: "Demonstrerad förmåga att leverera resultat på både fristående initiativ och storskaliga strategiska projekt",
-                copyright: "&copy; 2025 Clement Baylion. Alla rättigheter förbehållna.",
+                copyrightResume: "&copy; 2025 Clement Baylion. Alla rättigheter förbehållna.",
                 contactMeModalTitle: "Kontakta mig",
                 email: "E-post:",
-                phone: "Telefon:",
+                phoneSweden: "Telefon (Sverige):",
+                phoneFrance: "Telefon (Frankrike):",
                 flagEnAlt: "Engelska",
                 flagFrAlt: "Franska",
                 flagSvAlt: "Svenska",
-                aiAssistantTitle: "AI Marknadsassistent",
-                aiAssistantDescription: "Ställ en fråga om min erfarenhet eller begär en sammanfattning av mina kunskaper. (Drivs av Gemini API)",
-                aiInputPlaceholder: "Ex: Vilken är Clements främsta tillgång för ett teknikföretag?",
-                askQuestionBtn: "Ställ Fråga",
-                summarizeExpertiseBtn: "Sammanfatta Expertis",
-                loadingText: "Genererar svar...",
             }
         };
 
-        let currentLang = localStorage.getItem('lang') || 'en';
+        let currentLang = localStorage.getItem('lang') || 'en'; // Default to English
+
+        const langFlagEn = document.getElementById('langFlagEn');
+        const langFlagFr = document.getElementById('langFlagFr');
+        const langFlagSv = document.getElementById('langFlagSv');
+
+        function updateFlagsVisibility() {
+            // All flags are always visible
+        }
 
         window.switchLanguage = function(langCode) {
             currentLang = langCode;
@@ -357,92 +516,49 @@
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[currentLang] && translations[currentLang][key]) {
-                    element.innerHTML = translations[currentLang][key];
+                    // Special handling for placeholder and alt attributes
+                    if (element.tagName === 'TEXTAREA' && element.placeholder) {
+                        element.placeholder = translations[currentLang][key];
+                    } else if (element.tagName === 'IMG' && element.alt) {
+                        element.alt = translations[currentLang][key];
+                    } else if (element.tagName === 'TITLE') { // For the <title> tag
+                        document.title = translations[currentLang][key];
+                    }
+                    else {
+                        element.innerHTML = translations[currentLang][key];
+                    }
                 }
             });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-i18n-placeholder');
-                if (translations[currentLang] && translations[currentLang][key]) {
-                    element.placeholder = translations[currentLang][key];
-                }
-            });
-            document.title = translations[currentLang].pageTitle;
         }
 
-        // --- GEMINI API SCRIPT ---
-        const agentPersonaInstruction = `You are Clement Baylion, a Marketing Manager with a dual background as an engineer and an MBA. You have 20 years of experience across mechanics, software, electronics, and services. You specialize in transforming complex technical innovations into clear value propositions that drive sales. You bridge the gap between engineering teams and customers. Your key strengths are your strategic vision, your ability to make technology understandable and desirable, and your proven track record of execution with major brands. You are analytical, results-oriented, and customer-focused. Respond to questions based on this persona.`;
-
+        // Initial application of translations and flag update on page load
         document.addEventListener('DOMContentLoaded', () => {
-            applyTranslations(); // Apply translations on load
-
-            const aiInput = document.getElementById('aiInput');
-            const askQuestionBtn = document.getElementById('askQuestionBtn');
-            const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn');
-            const aiOutput = document.getElementById('aiOutput');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-
-            async function callGeminiAPI(userPrompt) {
-                loadingIndicator.style.display = 'flex';
-                aiOutput.innerHTML = '';
-                askQuestionBtn.disabled = true;
-                summarizeExpertiseBtn.disabled = true;
-
-                try {
-                    let chatHistory = [
-                        { role: "user", parts: [{ text: agentPersonaInstruction }] },
-                        { role: "user", parts: [{ text: userPrompt }] }
-                    ];
-                    
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // API key is handled by the environment
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`API request failed with status ${response.status}`);
-                    }
-
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        aiOutput.innerHTML = `<p class="text-slate-700" style="white-space: pre-wrap;">${text}</p>`;
-                    } else {
-                        throw new Error("Invalid response structure from API.");
-                    }
-                } catch (error) {
-                    aiOutput.innerHTML = `<p class="text-red-500">Erreur: Impossible de générer une réponse. Veuillez réessayer. (${error.message})</p>`;
-                    console.error("Error calling Gemini API:", error);
-                } finally {
-                    loadingIndicator.style.display = 'none';
-                    askQuestionBtn.disabled = false;
-                    summarizeExpertiseBtn.disabled = false;
-                }
-            }
-
-            if (askQuestionBtn) {
-                askQuestionBtn.addEventListener('click', () => {
-                    const input = aiInput.value.trim();
-                    if (input) {
-                        callGeminiAPI(`Answer the following question based on Clement's resume and expertise: ${input}`);
-                    } else {
-                        aiOutput.innerHTML = '<p class="text-red-500">Veuillez entrer une question.</p>';
-                    }
-                });
-            }
-            
-            if (summarizeExpertiseBtn) {
-                summarizeExpertiseBtn.addEventListener('click', () => {
-                    const prompt = `Based on your persona as Clement Baylion, please provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in ${currentLang === 'fr' ? 'French' : 'English'}.`;
-                    callGeminiAPI(prompt);
-                });
-            }
+            applyTranslations();
+            updateFlagsVisibility();
         });
+
+
+        // Get the modal and buttons
+        const contactBtn = document.getElementById('contactMeBtn');
+        const modal = document.getElementById('contactModal');
+        const closeBtn = document.querySelector('.modal-close-button');
+
+        // When the user clicks the contact button, open the modal
+        contactBtn.onclick = function() {
+            modal.style.display = 'flex'; // Use flex to center content
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // When the user clicks anywhere outside of the modal content, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
