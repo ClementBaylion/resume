@@ -370,9 +370,8 @@
         }
 
         // --- GEMINI API SCRIPT ---
-        const agentPersonaInstruction = `You are Clement Baylion, a Marketing Manager with a dual background as an engineer and an MBA. You have 20 years of experience across mechanics, software, electronics, and services. You specialize in transforming complex technical innovations into clear value propositions that drive sales. You bridge the gap between engineering teams and customers. Your key strengths are your strategic vision, your ability to make technology understandable and desirable, and your proven track record of execution with major brands. You are analytical, results-oriented, and customer-focused. Respond to questions based on this persona.`;
-
-        document.addEventListener('DOMContentLoaded', () => {
+        
+        document.addEventListener('DOMContentLoaded', async () => {
             applyTranslations(); // Apply translations on load
 
             const aiInput = document.getElementById('aiInput');
@@ -380,8 +379,33 @@
             const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn');
             const aiOutput = document.getElementById('aiOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            let agentPersonaInstruction = ''; // This will hold the persona text
+
+            // --- NEW: Fetch the persona from the external file ---
+            try {
+                const response = await fetch('./persona.js');
+                if (!response.ok) {
+                    throw new Error(`Could not fetch persona.js: ${response.statusText}`);
+                }
+                agentPersonaInstruction = await response.text();
+                console.log("Persona loaded successfully.");
+            } catch (error) {
+                console.error("Failed to load agent persona:", error);
+                aiOutput.innerHTML = `<p class="text-red-500">Erreur critique: Impossible de charger la personnalité de l'agent. ${error.message}</p>`;
+                // Disable buttons if persona fails to load
+                askQuestionBtn.disabled = true;
+                summarizeExpertiseBtn.disabled = true;
+                return; // Stop execution if persona is not available
+            }
+            // --- END NEW ---
 
             async function callGeminiAPI(userPrompt) {
+                if (!agentPersonaInstruction) {
+                    aiOutput.innerHTML = `<p class="text-red-500">Erreur: La personnalité de l'agent n'est pas chargée.</p>`;
+                    return;
+                }
+
                 loadingIndicator.style.display = 'flex';
                 aiOutput.innerHTML = '';
                 askQuestionBtn.disabled = true;
@@ -390,13 +414,12 @@
                 try {
                     const fullPrompt = `${agentPersonaInstruction}\n\n---\n\nUser Request: ${userPrompt}`;
 
-                    // MODIFICATION: Call our own secure API route instead of Google directly.
                     const response = await fetch('/api/gemini', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ prompt: fullPrompt }), // Send the prompt in the body
+                        body: JSON.stringify({ prompt: fullPrompt }),
                     });
 
                     if (!response.ok) {
