@@ -60,20 +60,6 @@
             text-decoration: none;
             cursor: pointer;
         }
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #3b82f6; /* Blue spinner */
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .language-switcher {
             position: absolute;
             top: 1rem;
@@ -179,35 +165,6 @@
         </div>
     </div>
     
-    <!-- AI Marketing Assistant Section -->
-    <div class="bg-white shadow-lg mb-16">
-        <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12">
-            <section class="text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 border-b-2 border-blue-200 pb-2 mb-8" data-i18n="aiAssistantTitle">Assistant Marketing IA</h2>
-                <p class="text-slate-600 mb-6" data-i18n="aiAssistantDescription">Posez une question sur mon expérience ou demandez un résumé de mes compétences. (Basé sur l'API Gemini)</p>
-                <div class="max-w-2xl mx-auto">
-                    <textarea id="aiInput" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="3" data-i18n-placeholder="aiInputPlaceholder" placeholder="Ex: Quel est le principal atout de Clément pour une entreprise technologique ?"></textarea>
-                    <div class="mt-4 flex flex-col sm:flex-row justify-center gap-4">
-                        <button id="askQuestionBtn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center">
-                            <span data-i18n="askQuestionBtn">Poser la question</span>
-                        </button>
-                        <button id="summarizeExpertiseBtn" class="bg-slate-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-700 transition-colors duration-300 flex items-center justify-center">
-                            <span data-i18n="summarizeExpertiseBtn">Résumer l'expertise</span>
-                        </button>
-                    </div>
-                    <!-- MODIFICATION 1: Ajout du style "white-space: pre-wrap" directement ici -->
-                    <div id="aiOutput" class="mt-6 p-4 bg-slate-50 rounded-lg min-h-[100px] text-left text-slate-700" style="white-space: pre-wrap;">
-                        <!-- La réponse de l'IA sera affichée ici -->
-                    </div>
-                    <div id="loadingIndicator" class="hidden mt-4 items-center justify-center flex-col">
-                        <div class="loading-spinner mx-auto"></div>
-                        <p class="text-slate-500 mt-2" data-i18n="loadingText">Génération de la réponse...</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
     <!-- New Section: Bottom Contact Buttons -->
     <div class="container mx-auto max-w-4xl px-8 sm:px-12 py-12 text-center">
         <div class="flex flex-col sm:flex-row justify-center gap-8">
@@ -243,7 +200,7 @@
 
     <!-- Scripts -->
     <script type="module">
-        // --- MODAL & LANGUAGE SCRIPT (No changes here) ---
+        // --- MODAL & LANGUAGE SCRIPT ---
         var modal = document.getElementById("contactModal");
         var btnTop = document.getElementById("contactMeBtn");
         var btnBottom = document.getElementById("contactMeBtnBottom");
@@ -277,12 +234,6 @@
                 flagEnAlt: "English",
                 flagFrAlt: "French",
                 flagSvAlt: "Swedish",
-                aiAssistantTitle: "AI Marketing Assistant",
-                aiAssistantDescription: "Ask a question about my experience or request a summary of my skills. (Powered by Gemini API)",
-                aiInputPlaceholder: "Ex: What is Clement's main asset for a tech company?",
-                askQuestionBtn: "Ask Question",
-                summarizeExpertiseBtn: "Summarize Expertise",
-                loadingText: "Generating response...",
             },
             fr: {
                 pageTitle: "Clément Baylion - Profil",
@@ -307,12 +258,6 @@
                 flagEnAlt: "Anglais",
                 flagFrAlt: "Français",
                 flagSvAlt: "Suédois",
-                aiAssistantTitle: "Assistant Marketing IA",
-                aiAssistantDescription: "Posez une question sur mon expérience ou demandez un résumé de mes compétences. (Basé sur l'API Gemini)",
-                aiInputPlaceholder: "Ex: Quel est le principal atout de Clément pour une entreprise technologique ?",
-                askQuestionBtn: "Poser la question",
-                summarizeExpertiseBtn: "Résumer l'expertise",
-                loadingText: "Génération de la réponse...",
             },
             sv: {
                 pageTitle: "Clement Baylion - Profil",
@@ -337,12 +282,6 @@
                 flagEnAlt: "Engelska",
                 flagFrAlt: "Franska",
                 flagSvAlt: "Svenska",
-                aiAssistantTitle: "AI Marknadsassistent",
-                aiAssistantDescription: "Ställ en fråga om min erfarenhet eller begär en sammanfattning av mina kunskaper. (Drivs av Gemini API)",
-                aiInputPlaceholder: "Ex: Vilken är Clements främsta tillgång för ett teknikföretag?",
-                askQuestionBtn: "Ställ Fråga",
-                summarizeExpertiseBtn: "Sammanfatta Expertis",
-                loadingText: "Genererar svar...",
             }
         };
 
@@ -369,98 +308,9 @@
             });
             document.title = translations[currentLang].pageTitle;
         }
-
-        // --- GEMINI API SCRIPT ---
         
-        document.addEventListener('DOMContentLoaded', async () => {
-            applyTranslations(); // Apply translations on load
-
-            const aiInput = document.getElementById('aiInput');
-            const askQuestionBtn = document.getElementById('askQuestionBtn');
-            const summarizeExpertiseBtn = document.getElementById('summarizeExpertiseBtn');
-            const aiOutput = document.getElementById('aiOutput');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            
-            let agentPersonaInstruction = '';
-
-            try {
-                const response = await fetch('./persona.js');
-                if (!response.ok) {
-                    throw new Error(`Could not fetch persona.js: ${response.statusText}`);
-                }
-                agentPersonaInstruction = await response.text();
-                console.log("Persona loaded successfully.");
-            } catch (error) {
-                console.error("Failed to load agent persona:", error);
-                aiOutput.innerText = `Erreur critique: Impossible de charger la personnalité de l'agent. ${error.message}`;
-                askQuestionBtn.disabled = true;
-                summarizeExpertiseBtn.disabled = true;
-                return;
-            }
-
-            async function callGeminiAPI(userPrompt) {
-                if (!agentPersonaInstruction) {
-                    aiOutput.innerText = `Erreur: La personnalité de l'agent n'est pas chargée.`;
-                    return;
-                }
-
-                loadingIndicator.style.display = 'flex';
-                aiOutput.innerText = '';
-                askQuestionBtn.disabled = true;
-                summarizeExpertiseBtn.disabled = true;
-
-                try {
-                    const fullPrompt = `${agentPersonaInstruction}\n\n---\n\nUser Request: ${userPrompt}`;
-
-                    const response = await fetch('/api/gemini', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ prompt: fullPrompt }),
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.details?.error?.message || errorData.error || 'API request failed');
-                    }
-
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        // MODIFICATION 2: Utilisation de .innerText pour insérer le texte brut
-                        aiOutput.innerText = text;
-                    } else {
-                        throw new Error("Invalid or empty response structure from API.");
-                    }
-                } catch (error) {
-                    aiOutput.innerText = `Erreur: Impossible de générer une réponse. Veuillez réessayer.\nDétail: ${error.message}`;
-                    console.error("Error calling API route:", error);
-                } finally {
-                    loadingIndicator.style.display = 'none';
-                    askQuestionBtn.disabled = false;
-                    summarizeExpertiseBtn.disabled = false;
-                }
-            }
-
-            if (askQuestionBtn) {
-                askQuestionBtn.addEventListener('click', () => {
-                    const input = aiInput.value.trim();
-                    if (input) {
-                        callGeminiAPI(input);
-                    } else {
-                        aiOutput.innerText = 'Veuillez entrer une question.';
-                    }
-                });
-            }
-            
-            if (summarizeExpertiseBtn) {
-                summarizeExpertiseBtn.addEventListener('click', () => {
-                    const prompt = `Provide a concise summary of your key added value and expertise. Focus on how your skills and experience translate into concrete benefits for a potential employer. Provide the summary in ${currentLang === 'fr' ? 'French' : 'English'}.`;
-                    callGeminiAPI(prompt);
-                });
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTranslations();
         });
     </script>
 </body>
